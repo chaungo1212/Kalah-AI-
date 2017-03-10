@@ -1,10 +1,10 @@
 Kalah
 ------------
-seeds move clockwise fashion
-land in every spot but opponent's store
-if deposit seed in store, free turn if end in store
-if one side cleared, auto sum rest of seeds and add to opponent
-If the last sown seed lands in an empty house owned by the player,
+-seeds move clockwise fashion
+-land in every spot but opponent's store
+-if deposit seed in store, free turn if end in store
+-if one side cleared, auto sum rest of seeds and add to opponent
+-If the last sown seed lands in an empty house owned by the player,
 and the opposite house contains seeds, both the last seed and the
 opposite seeds are captured and placed into the player's store.
 It is possible for the game to end in a draw.
@@ -25,12 +25,16 @@ Game Manager
 
 Board
 --what_house()
+--empty_house()
 
 Player
 
 Seed
+--is_moveable()
+--
 
 AI
+--minmax-tree()
 
 
 Scrum
