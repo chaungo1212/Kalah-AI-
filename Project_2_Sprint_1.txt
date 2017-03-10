@@ -1,0 +1,55 @@
+Kalah
+------------
+seeds move clockwise fashion
+land in every spot but opponent's store
+if deposit seed in store, free turn if end in store
+if one side cleared, auto sum rest of seeds and add to opponent
+If the last sown seed lands in an empty house owned by the player,
+and the opposite house contains seeds, both the last seed and the
+opposite seeds are captured and placed into the player's store.
+It is possible for the game to end in a draw.
+
+
+Classes
+-------------
+GUI
+--draw_screen()
+--clear_screen()
+
+Game Manager
+--get_move()
+--get_score()
+--is_winner()
+--check_time()
+--difficulty() ???
+
+Board
+--what_house()
+
+Player
+
+Seed
+
+AI
+
+
+Scrum
+-------------
+Project Manager & SCRUM Master = 
+maintaining the backlogs and burndown charts, lead SCRUM meetings,
+somewhat less programming, responsible for all turnins by the team
+
+
+Product backlog =
+try to break the overall program into a number of tasks
+
+
+Initial burndown chart =
+estimate of the overall amount of time taken for all of the tasks
+that will be completed as agreed upon by the team.
+
+Sprint 1 backlog
+
+
+Turn in the product backlog and the initial burndown chart estimate
+Also, create a Github repo and add your TA to the repository
