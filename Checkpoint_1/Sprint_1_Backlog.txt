@@ -1,0 +1,39 @@
+﻿Team 37: Sprint 1 Backlog
+Project Manager: Eric Munoz
+Members: 
+- Eric Munoz
+- Chau Ngo
+- Sarah White
+
+
+Player
+* Checks to see if player has a turn available
+* Stores the username of the player
+* Stores the score of the player
+* Stores the endzone that corresponds to the score
+
+
+Game Manager
+* Check to see if move is valid for each player
+* Manage the time of each move
+* After every move, check to see if game is over
+* Inform who has won
+* Re draw the game after a move has been made
+* Handle new game and resets
+   * Calls the board to re-draw the states
+
+
+Board
+* Return what house a seed is in
+* Check if the last seed ends at the store
+* Check if the last seed ends at an empty house
+* Inform the manager that the player gets to play again
+* Check if a house is empty
+* Return the state of the board
+
+
+Seed
+* Check if seed is moveable
+* Contains an image of the individual piece
+   * Stores a value to determine the color or keep them all the same color
+* Stores a value to determine what house it is in
