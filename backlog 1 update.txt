@@ -1,0 +1,84 @@
+﻿Team 37: Sprint 1 Backlog update
+Project Manager: Eric Munoz
+Members: 
+- Eric Munoz
+- Chau Ngo
+- Sarah White
+
+
+Player
+* Checks to see if player has a turn available
+	(this should be done in game manager)
+* Stores the username of the player
+	String getUsername()				: done
+	void setUsername(String username)	: done
+* Stores the score of the player
+	//it will be done in game manager
+* Get the turn for player
+	boolean getTurn()					: done
+	void setTurn(boolean turn)			: done
+
+Game Manager
+* Check to see if move is valid for each player
+	void makeMove(int location) 		: done
+	boolean isValidMove(int location)	:done
+* Manage the time of each move and check if it is out of time
+	void startTimer()					: update
+	int checkTimer()					: update
+	boolean timeIsOut()					: update 
+* After every move, check to see if game is over
+	boolean isGameOver()
+* Inform who has won
+	Player whoWon()
+* Score for each player
+	//score for player 1
+	int getP1Score()
+	void setP1Score(int score)
+	// score for player 2
+	int getP2Score()
+	void setP2Score(int score)
+* Re draw the game after a move has been made
+	void updateGame()
+* Handle new game and resets
+   * Calls the board to re-draw the states
+	void newGame()
+	void resetGame()
+	void drawGame()
+What we missed and need to update: a function to tell the board whose turn it is
+
+Board
+* Return a board object 
+	Board(int houses, int seedsPer)	: done
+	Board(int houses, int[] seedsPer): done
+	Board(Board b)//copy constructor: done
+* Distribute seeds in house and update value
+	void sowSeeds() 				: needs update 
+	// Check if the last seed ends at the store	
+	// Check if the last seed ends at an empty house
+	// Check if a house is empty
+* Inform the manager that the player gets to play again
+	Needs update
+* Return number of seeds:
+	int getNumSeeds(int from)		: done
+* Set the state of the board:
+	void setSeeds(int[] newSeeds)	: done
+* Return the state of the board
+	int[] getSeeds()				: done
+* Draw the board
+	void drawBoard()				: done
+* Get the player score
+	int getP1Score()				: done
+	int getP2Score()				: done
+What we missed and need to update: 
+	* make sure player can only put seeds in their store
+	* if the last seed ends at their store, it will give the player one more turn
+
+	
+/* 
+ * Got rid of seed class cause it is not needed for now
+ */
+Seed
+* Check if seed is moveable
+* Contains an image of the individual piece
+   * Stores a value to determine the color or keep them all the same color
+* Stores a value to determine what house it is in
