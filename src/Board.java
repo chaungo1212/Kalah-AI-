@@ -4,6 +4,8 @@
 	Author: Sarah White
 */
 
+import java.util.Arrays;
+
 class Board
 {
 	/* left store is index "0", right store is index "length-1",
