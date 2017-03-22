@@ -10,13 +10,13 @@ Player
 * Checks to see if player has a turn available
 	(this should be done in game manager)
 * Stores the username of the player
-	String getUsername()				: done
-	void setUsername(String username)	: done
+	String getUsername()					: done
+	void setUsername(String username)			: done
 * Stores the score of the player
 	//it will be done in game manager
 * Get the turn for player
 	boolean getTurn()					: done
-	void setTurn(boolean turn)			: done
+	void setTurn(boolean turn)				: done
 
 Game Manager
 * Check to see if move is valid for each player
@@ -48,11 +48,11 @@ What we missed and need to update: a function to tell the board whose turn it is
 
 Board
 * Return a board object 
-	Board(int houses, int seedsPer)	: done
-	Board(int houses, int[] seedsPer): done
-	Board(Board b)//copy constructor: done
+	Board(int houses, int seedsPer)				: done
+	Board(int houses, int[] seedsPer)			: done
+	Board(Board b)//copy constructor			: done
 * Distribute seeds in house and update value
-	void sowSeeds() 				: needs update 
+	void sowSeeds() 					: needs update 
 	// Check if the last seed ends at the store	
 	// Check if the last seed ends at an empty house
 	// Check if a house is empty
@@ -63,12 +63,12 @@ Board
 * Set the state of the board:
 	void setSeeds(int[] newSeeds)	: done
 * Return the state of the board
-	int[] getSeeds()				: done
+	int[] getSeeds()					: done
 * Draw the board
-	void drawBoard()				: done
+	void drawBoard()					: done
 * Get the player score
-	int getP1Score()				: done
-	int getP2Score()				: done
+	int getP1Score()					: done
+	int getP2Score()					: done
 What we missed and need to update: 
 	* make sure player can only put seeds in their store
 	* if the last seed ends at their store, it will give the player one more turn
