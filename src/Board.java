@@ -10,8 +10,10 @@ class Board
 	   houses start at upper left corner as "1",
 	   index moves right and down to the lower right corner
 	*/
+private:
 	int[] seeds;
 	
+public:
 	public Board(int houses, int seedsPer)
 	{
 		seeds = new int[houses];
@@ -51,6 +53,7 @@ class Board
 	
 	public void sowSeeds(int house)
 	{
+        int original = house;
 		int remaining = getSeeds(house);
 		while(remaining != 0)
 		{
@@ -72,10 +75,50 @@ class Board
 				remaining--;
 			}
 		}
+        //if last seed in empty house
+        if (seeds[house] == 1)
+        {
+            //on player one's side
+            if((original-0) < (seeds.length-1)-original)
+                //capture all on both sides of the board for player 1
+                seeds[0] +=
+                    seeds[house] + seeds[house+((seeds.length-1)/2)];
+            }
+            //on player two's side
+            else if((original-0) > (seeds.length-1)-original)
+            {
+                //capture all on both sides of the board for player 2
+                seeds[(seeds.length-1)] +=
+                    seeds[house] + seeds[house-((seeds.length-1)/2)];
+            }
+        }
 	}
 	
 	public int[] getSeeds()
 	{
         return seeds;
 	}
+    
+    public void drawBoard()
+    {
+        for(int i = 1; i <= ((seeds.length-1)/2); i++)
+        {
+            System.out.print(seeds[i] + ' ');
+        }
+        System.out.print('\n');
+        
+        System.out.print(seeds[0]);
+        for(int k = 1; k <= ((seeds.length-1); k++)
+        {
+            System.out.print(' ');
+        }
+        System.out.print(seeds[seeds.length]);
+        System.out.print('\n');
+        
+        for(int j = ((seeds.length-1)/2); j <= ((seeds.length-1)); j++)
+        {
+            System.out.print(seeds[j] + ' ');
+        }
+        System.out.print('\n');
+    }
 }
