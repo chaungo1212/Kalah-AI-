@@ -101,24 +101,25 @@ public:
     
     public void drawBoard()
     {
-        for(int i = 1; i <= ((seeds.length-1)/2); i++)
+        int[] temp = getSeeds();
+        for(int i = 1; i <= ((temp.length-1)/2); i++)
         {
-            System.out.print(seeds[i] + " ");
+            System.out.print(temp[i] + " ");
         }
-        System.out.println("");
+        System.out.println("\n");
         
-        System.out.print(seeds[0]);
-        for(int k = 1; k <= ((seeds.length-1); k++)
+        System.out.print(temp[0]);
+        for(int k = 1; k <= ((temp.length-1); k++)
         {
             System.out.print(" ");
         }
-        System.out.print(seeds[seeds.length]);
-        System.out.println("");
+        System.out.print(temp[temp.length]);
+        System.out.println("\n");
         
-        for(int j = ((seeds.length-1)/2); j <= ((seeds.length-1)); j++)
+        for(int j = ((temp.length-1)/2); j <= ((temp.length-1)); j++)
         {
-            System.out.print(seeds[j] + " ");
+            System.out.print(temp[j] + " ");
         }
-        System.out.println("");
+        System.out.println("\n");
     }
 }
