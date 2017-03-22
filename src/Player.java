@@ -45,7 +45,6 @@ public class Player {
 
 	// Constructor
 	public Player(String player_name) {
-		setUsername(player_name);
-		// setMove(player_move);
+		this.username=player_name;
 	}
 }
