@@ -6,16 +6,16 @@
 
 import java.util.Arrays;
 
-class Board
-{
-	/* left store is index "0", right store is index "length-1",
-	   houses start at upper left corner as "1",
-	   index moves right and down to the lower right corner
-	*/
-private:
-	int[] seeds;
-	
-public:
+class Board {
+	/*
+	 * left store is index "0", right store is index "length-1", houses start at
+	 * upper left corner as "1", index moves right and down to the lower right
+	 * corner
+	 */
+	private int[] seeds;
+
+	public GameManager game_manager;
+
 	public Board(int houses, int seedsPer)
 	{
 		seeds = new int[houses];
@@ -94,7 +94,6 @@ public:
                     seeds[house] + seeds[house-((seeds.length-1)/2)];
             }
         }
-	}
 	
 	public int[] getSeeds()
 	{
@@ -111,7 +110,7 @@ public:
         System.out.println("\n");
         
         System.out.print(temp[0]);
-        for(int k = 1; k <= ((temp.length-1); k++)
+        for(int k = 1; k <= (temp.length-1); k++)
         {
             System.out.print(" ");
         }
