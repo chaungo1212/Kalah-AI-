@@ -1,33 +1,25 @@
 public class Player {
 	private String username;
 	int score;
-	boolean move = false;
+	boolean turn = false;
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String userame) {
-		this.username = userame;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public int getScore() {
-		return score;
+	public boolean getTurn() {
+		return turn;
 	}
 
-	public void setScore(int score) {
-		this.score = score;
+	public void setTurn(boolean turn) {
+		this.turn = turn;
 	}
 
-	public boolean getMove() {
-		return move;
-	}
-
-	public void setMove(boolean move) {
-		this.move = move;
-	}
-
-	public boolean makeMove(Board board, int seed, int from_house, int to_house) {
+	/*public boolean makeMove(Board board, int seed, int from_house, int to_house) {
 		// Move seed on the board.
 		// Ask board.game_manager to check whether this move is available or not
 		// boolean check = board.game_manager.checkvalid()
@@ -41,7 +33,7 @@ public class Player {
 			System.out.println(" invalid move");
 			return false;
 		}
-	}
+	}*/
 
 	// Constructor
 	public Player(String player_name) {
