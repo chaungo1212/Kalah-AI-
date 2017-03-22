@@ -29,6 +29,15 @@ public class Player {
 	public void setMove(boolean move) {
 		this.move = move;
 	}
+	public void makeMove(Board board, int seed, int from_house, int to_house) {
+		//gameBoard = board;
+		// Move seed on the board.
+		// Ask board.game_manager to check whether this move is available or not
+		// bool check = board.game_manager.checkvalid()
+		// if it is validate(true) => update the board and score
+		// else give a message to player that this move is not available
+		
+	}
 
 	// Override toString to display the correct amount information
 	public String toString() {
