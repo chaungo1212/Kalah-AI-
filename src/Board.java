@@ -63,8 +63,7 @@ class Board
 				else
 				{
 					house = (seeds.length/2);
-				}
-				
+				}	
 			}
 			else
 			{
@@ -75,10 +74,8 @@ class Board
 		}
 	}
 	
-	public void getState()
+	public int[] getSeeds()
 	{
-		//give state of board
-			//give seeds per each index
-			//give current store values
+        return seeds;
 	}
 }
