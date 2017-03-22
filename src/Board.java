@@ -103,22 +103,22 @@ public:
     {
         for(int i = 1; i <= ((seeds.length-1)/2); i++)
         {
-            System.out.print(seeds[i] + ' ');
+            System.out.print(seeds[i] + " ");
         }
-        System.out.print('\n');
+        System.out.println("");
         
         System.out.print(seeds[0]);
         for(int k = 1; k <= ((seeds.length-1); k++)
         {
-            System.out.print(' ');
+            System.out.print(" ");
         }
         System.out.print(seeds[seeds.length]);
-        System.out.print('\n');
+        System.out.println("");
         
         for(int j = ((seeds.length-1)/2); j <= ((seeds.length-1)); j++)
         {
-            System.out.print(seeds[j] + ' ');
+            System.out.print(seeds[j] + " ");
         }
-        System.out.print('\n');
+        System.out.println("");
     }
 }
