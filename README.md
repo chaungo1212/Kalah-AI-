@@ -7,7 +7,7 @@ Google Drive Links:
 Java Resources
   - Has a bunch of topics about java concepts
     - https://www.tutorialspoint.com/java/java_object_classes.htm
-I lost yalls numbers
+Hey guys can yall text me? I lost yalls numbers?
   - Eric Munoz: 
     - 832-375-4203
     - ericmunoz147@tamu.edu
