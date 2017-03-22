@@ -58,19 +58,44 @@ class Board {
 	public void sowSeeds(int house) {
 		int original = house;
 		int remaining = getNumSeeds(house);
+		
+		//make sure player can only put in their store
+		/*if(p1)
+		{
+			if(house == seeds.length-1)
+			{
+				house = (seeds.length/2);
+			}
+		}
+		else if (!p1)
+		{
+			if(house == 0)
+			{
+				house = (seeds.length/2)+1;
+			}
+		}
+		*/
+		
 		while (remaining != 0) {
 			if (house == 0 || house == (seeds.length - 1)) {
 				if (house == 0) {
 					house = ((seeds.length / 2) + 1);
-				} else {
+				}
+				else {
 					house = (seeds.length / 2);
 				}
-			} else {
+			}
+			else {
 				house = house++;
 				seeds[house]++;
 				remaining--;
 			}
 		}
+		//if last seed in a store
+		if (house == 0 || house == (seeds.length - 1)) {
+			//increase # of turns
+		}
+		
 		// if last seed in empty house
 		if (seeds[house] == 1) {
 			// on player one's side

@@ -105,5 +105,9 @@ public class GameManager {
 	public void drawGame() {
 		board.drawBoard();
 	}
+	
+	/*
+	 * Need a function to tell board whose turn it is
+	 */
 
 }
