@@ -30,7 +30,6 @@ public class Player {
 		this.move = move;
 	}
 	public void makeMove(Board board, int seed, int from_house, int to_house) {
-		//gameBoard = board;
 		// Move seed on the board.
 		// Ask board.game_manager to check whether this move is available or not
 		// bool check = board.game_manager.checkvalid()
