@@ -13,9 +13,7 @@ class Board {
 	 * corner
 	 */
 	private int[] seeds;
-
-	public GameManager game_manager;
-
+    
 	public Board(int houses, int seedsPer)
 	{
 		seeds = new int[houses];
@@ -46,14 +44,20 @@ class Board {
 			//error
 		}
 	}
+    
+    public Board(Board b)
+    {
+        seeds = b.getSeeds();
+    }
 	
 	//gets number of seeds at a particular index
-	public int getSeeds(int from)
+	public int getNumSeeds(int from)
 	{
 		return seeds[from];
 	}
-	
-	public void sowSeeds(int house)
+    
+    /*
+    public void sowSeeds(int house)
 	{
         int original = house;
 		int remaining = getSeeds(house);
@@ -82,6 +86,7 @@ class Board {
         {
             //on player one's side
             if((original-0) < (seeds.length-1)-original)
+            {
                 //capture all on both sides of the board for player 1
                 seeds[0] +=
                     seeds[house] + seeds[house+((seeds.length-1)/2)];
@@ -94,6 +99,8 @@ class Board {
                     seeds[house] + seeds[house-((seeds.length-1)/2)];
             }
         }
+    }
+    */
 	
 	public int[] getSeeds()
 	{

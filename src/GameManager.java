@@ -16,8 +16,51 @@ public class GameManager {
 	
 	public void make_move(int location){
 		System.out.print("Updating Game\n");
-	}
-	
+        
+        int original = location;
+		int remaining = getNumSeeds(location);
+        int[] temp = board.getSeeds();
+		while(remaining != 0)
+		{
+			if(location == 0 || location == (temp.length-1))
+			{
+				if(location == 0)
+				{
+					location = ((temp.length/2)+1);
+				}
+				else
+				{
+					location = (temp.length/2);
+				}	
+			}
+			else
+			{
+				location = location++;
+				temp[location]++;
+				remaining--;
+			}
+		}
+        //if last seed in empty house
+        if (temp[location] == 1)
+        {
+            //on player one's side
+            if((original-0) < (temp.length-1)-original)
+            {
+                //capture all on both sides of the board for player 1
+                temp[0] +=
+                    temp[location] + temp[location+((temp.length-1)/2)];
+            }
+            //on player two's side
+            else if((original-0) > (temp.length-1)-original)
+            {
+                //capture all on both sides of the board for player 2
+                temp[(temp.length-1)] +=
+                    temp[location] + temp[location-((temp.length-1)/2)];
+            }
+        }
+        board.seeds = temp;
+    }
+
 	public boolean is_valid_move(int location){
 		return true;
 	}
