@@ -1,3 +1,6 @@
+Sprint 2 - Backlog
+SCRUM Leader - Eric Munoz
+
 GUI
 * Welcome Screen
    * Contains sub menus
@@ -6,16 +9,21 @@ GUI
    * Select if he/she will play as player 1 or 2
    * Select difficulty of the AI
    * Enters his/her own custom name via keyboard
-* “Play Game” button
+* â€œPlay Gameâ€ button
    * Game is loaded and starting game state screen displayed
-* User if prompted if it their turn or the AI’s
+* User if prompted if it their turn or the AIâ€™s
    * A timer is displayed showing the current time left for the turn
 * Get Input from mouse when user clicks on a box
    * Number of pieces in each box displays when hovered over
    * Each piece is moved to correct location on the board
-* Contains “New Game” and “Reset” widgets during game play
+* Contains â€œNew Gameâ€ and â€œResetâ€ widgets during game play
    * Calls the game manager to handle these
 * Contains all images to use for the widgets
+
+* Game Manager
+	* Handling player turns
+	* Combining the GUI interface with the game
+	* Begin basic message paassing to the server when I button is pressed
 
 Basic AI
 * Choose random valid move
@@ -33,6 +41,12 @@ Client Server Model
 	* P1 sends move
 	* server sends move info
 	* checks validity of move/timer
+	
+* Meeting Times
+	* Friday 6:00 PM
+	* Saturday 1:00 PM
+	* Sunday 1:00 PM
 
-
+* Work Distribution
+	* The work will be divided evenly and we will all work as a team on each piece.
 
