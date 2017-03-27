@@ -153,11 +153,11 @@ public class KalahGUI {
 		frame.getContentPane().add(btnNext);
 
 		// image
-		JLabel lblImage = new JLabel(" ");
+	/*	JLabel lblImage = new JLabel(" ");
 		Image img = new ImageIcon(this.getClass().getResource("welcome-icon.png")).getImage();
 		lblImage.setIcon(new ImageIcon(img));
 		lblImage.setBounds(275, 53, 166, 256);
-		frame.getContentPane().add(lblImage);
+		frame.getContentPane().add(lblImage);*/
 
 	}
 }
