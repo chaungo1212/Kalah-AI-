@@ -1,9 +1,16 @@
+/*
+	Project: Kalah_315
+	File: GameManager.java
+	Authors: 
+*/
+
 import java.util.Scanner;
 
 public class GameManager {
 	Board board;
 	Player player_1;
 	Player player_2;
+	KalahGUI gui;
 
 	int houses;
 	int seeds_per;

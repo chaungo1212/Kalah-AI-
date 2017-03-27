@@ -1,3 +1,9 @@
+/*
+	Project: Kalah_315
+	File: Player.java
+	Authors: 
+*/
+
 public class Player {
 	private String username;
 	int score;

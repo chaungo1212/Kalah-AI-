@@ -1,12 +1,12 @@
 /*
 	Project: Kalah_315
 	File: Board.java
-	Author: Sarah White
+	Authors:
 */
 
 //import java.util.Arrays;
 
-class Board {
+public class Board {
 	/*
 	 * left store is index "0", right store is index "length-1", houses start at
 	 * upper left corner as "1", index moves right and down to the lower right

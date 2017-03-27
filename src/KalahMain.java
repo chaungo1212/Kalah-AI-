@@ -1,3 +1,9 @@
+/*
+	Project: Kalah_315
+	File: KalahMain.java
+	Authors:
+*/
+
 import java.util.Scanner;
 
 public class KalahMain {

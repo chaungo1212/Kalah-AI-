@@ -21,11 +21,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Button;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Game extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel content;
 	private JFrame frame;
+	private Queue<String> moves;
 	/**
 	 * sLaunch the application.
 	 */
@@ -42,7 +46,10 @@ public class Game extends JFrame {
 		});
 	}
 	
-
+	//public  getMoves() {
+		
+	//}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -57,26 +64,82 @@ public class Game extends JFrame {
 		JButton Button1 = new JButton("1");
 		Button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//insert move into action queue
+				moves.add("1");
 			}
 		});
 		
 		JButton button2 = new JButton("2");
+		button2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("2");
+			}
+		});
 		
 		JButton button3 = new JButton("3");
+		button3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("3");
+			}
+		});
 		
 		JButton button4 = new JButton("4");
+		button4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("4");
+			}
+		});
 		
 		JButton button5 = new JButton("5");
+		button5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("5");
+			}
+		});
 
 		JButton button_1 = new JButton("1");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("_1");
+			}
+		});
 		
 		JButton button_2 = new JButton("2");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("_2");
+			}
+		});
 		
 		JButton button_3 = new JButton("3");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("_3");
+			}
+		});
 		
 		JButton button_4 = new JButton("4");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("_4");
+			}
+		});
 		
 		JButton button_5 = new JButton("5");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//insert move into action queue
+				moves.add("_5");
+			}
+		});
 		
 		JButton btnReset = new JButton("Reset");
 		btnReset.setBackground(Color.WHITE);

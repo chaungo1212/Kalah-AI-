@@ -127,10 +127,15 @@ public class KalahGUI {
 			public void actionPerformed(ActionEvent e) {
 				int seedsNum = 0;
 				try {
-
-					seedsNum = Integer.parseInt(textFieldSeeds.getText());
+					int temp = Integer.parseInt(textFieldSeeds.getText());
+					if (temp < 10 && temp > 0) {
+						seedsNum = temp;
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Please enter a Number from 1 to 10");
+					}
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Please enter a Number from 1 to 6");
+					JOptionPane.showMessageDialog(null, "Please enter a Number from 1 to 10");
 				}
 				btnSaveSeeds.setText("Saved");
 
@@ -160,4 +165,5 @@ public class KalahGUI {
 		frame.getContentPane().add(lblImage);*/
 
 	}
+	
 }
