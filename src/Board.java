@@ -60,21 +60,25 @@ public class Board {
 		int remaining = getNumSeeds(house);
 		
 		//make sure player can only put in their store
-		/*if(p1)
+		
+		//if this player started from the top row
+		//skip opponents store
+		if(original < seeds.length / 2)
 		{
 			if(house == seeds.length-1)
 			{
 				house = (seeds.length/2);
 			}
 		}
-		else if (!p1)
+		//if this player started from the bottom row,
+		//skip opponents store
+		else
 		{
 			if(house == 0)
 			{
 				house = (seeds.length/2)+1;
 			}
 		}
-		*/
 		
 		while (remaining != 0) {
 			if (house == 0 || house == (seeds.length - 1)) {
@@ -143,5 +147,21 @@ public class Board {
 
 	public int getP2Score() {
 		return seeds[seeds.length - 1];
+	}
+	
+	public int[] getP1Homes() {
+		int[] listHalf = new int[(seeds.length-1)/2];
+		for (int i = 1; i < seeds.length-1/2; i++) {
+			listHalf[i-1] = (seeds[i-1]);
+		}
+		return listHalf;
+	}
+	
+	public int[] getP2Homes() {
+		int[] listHalf = new int[(seeds.length-1)/2];
+		for (int i = (seeds.length-1/2+1); i < seeds.length-1; i++) {
+			listHalf[i-1] = (seeds[i-1]);
+		}
+		return listHalf;
 	}
 }

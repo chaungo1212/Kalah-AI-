@@ -6,14 +6,17 @@
 
 import java.util.Scanner;
 
+
+//need some GameManager functions to be static so that
+//they can be called by the other classes
 public class GameManager {
-	Board board;
-	Player player_1;
-	Player player_2;
+	static Board board;
+	static Player player_1;
+	static Player player_2;
 	KalahGUI gui;
 
 	int houses;
-	int seeds_per;
+	static int seeds_per;
 	int player_choice = -1;
 	int scoreP1;
 	int scoreP2;
@@ -29,8 +32,23 @@ public class GameManager {
 		board.sowSeeds(location);
 	}
 
-	public boolean isValidMove(int location) {
-		return true;
+	public static boolean isValidMove(int location) {
+		if(player_1.getTurn() == true) {
+			if((location <= board.getSeeds().length/2) && location > 0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			if((location > board.getSeeds().length/2) && (location < board.getSeeds().length-1)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
 	}
 
 	public void startTimer() {
@@ -50,7 +68,16 @@ public class GameManager {
 	}
 
 	public Player whoWon() {
-		return player_1;
+		if (scoreP1 > scoreP2) {
+			return player_1;
+		}
+		else if (scoreP1 < scoreP2) {
+			return player_2;
+		}
+		else {
+			Player tie = new Player("tie", 3);
+			return tie;
+		}
 	}
 
 	public int getP1Score() {
@@ -94,11 +121,11 @@ public class GameManager {
 		board = new Board(houses, seeds_per);
 
 		if (player_choice == 1) {
-			player_1 = new Player(player_name);
-			player_2 = new Player("computer");
+			player_1 = new Player(player_name, 1);
+			player_2 = new Player("computer", 2);
 		} else {
-			player_1 = new Player("computer");
-			player_2 = new Player(player_name);
+			player_1 = new Player("computer", 1);
+			player_2 = new Player(player_name, 2);
 		}
 
 		System.out.print("New Game\n");
@@ -113,8 +140,13 @@ public class GameManager {
 		board.drawBoard();
 	}
 	
-	/*
-	 * Need a function to tell board whose turn it is
-	 */
+	public static int playerTurn() {
+		if (player_1.getTurn() == true) {
+			return 1;
+		}
+		else {
+			return 2;
+		}
+	}
 
 }

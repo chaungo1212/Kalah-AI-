@@ -7,6 +7,7 @@
 public class Player {
 	private String username;
 	int score;
+	int playernum;
 	boolean turn = false;
 
 	public String getUsername() {
@@ -42,7 +43,8 @@ public class Player {
 	}*/
 
 	// Constructor
-	public Player(String player_name) {
+	public Player(String player_name, int player_num) {
 		this.username=player_name;
+		this.playernum = player_num;
 	}
 }
