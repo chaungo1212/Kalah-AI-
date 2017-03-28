@@ -29,6 +29,7 @@ public class Game extends JFrame {
 	private JPanel contentPane;
 	private JPanel content;
 	private JFrame frame;
+	private JButton[][] buttons;
 	private Queue<String> moves;
 	/**
 	 * sLaunch the application.
@@ -60,9 +61,20 @@ public class Game extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		//moves = new Queue<String>;
 		
 		/*
-		 *set variable number of buttons
+		 * set variable number of buttons
+		 * make buttons and store in matrix
+		 * 
+		   	for (int i = 0; i < 2; i++) {
+		   		for (int j = 0; j < seeds_per*2; i++) {
+		   			buttons[i][j] = new JButton("j");
+		   		}
+		 	}
+		 */
+		
+		/*
 		 *with one action listener to rule them all
 		 * 
 		ActionListener a = new ActionListener() {
@@ -84,7 +96,7 @@ public class Game extends JFrame {
 	*/
 		
 		/*
-		 *add image to each of the buttons
+		 *add image to each of the buttons, if necessary (perhaps color code them for valid/invalid?)
 		 *
     for(int i=0;i<30;i++){
         buttons[i] = new JButton("label"+ i);

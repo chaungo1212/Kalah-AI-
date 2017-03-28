@@ -6,9 +6,6 @@
 
 import java.util.Scanner;
 
-
-//need some GameManager functions to be static so that
-//they can be called by the other classes
 public class GameManager {
 	static Board board;
 	static Player player_1;
@@ -25,7 +22,6 @@ public class GameManager {
 	Scanner reader = new Scanner(System.in);
 
 	public GameManager() {
-		newGame();
 	}
 
 	public void makeMove(int location) {
@@ -122,14 +118,30 @@ public class GameManager {
 		board = new Board(houses, seeds_per);
 
 		if (player_choice == 1) {
+			player_1 = new Player(player_name,1);
+			player_2 = new Player("computer",2);
+		} else {
+			player_1 = new Player("computer",1);
+			player_2 = new Player(player_name,2);
+		}
+
+		System.out.print("New Game\n");
+	}
+	
+	public void newG(int house, int seeds, int playernum, String username) {
+
+		houses = house;
+		seeds_per = seeds;
+		player_choice = playernum;
+		player_name = username;
+		board = new Board(houses, seeds_per);
+		if (player_choice == 1) {
 			player_1 = new Player(player_name, 1);
 			player_2 = new Player("computer", 2);
 		} else {
 			player_1 = new Player("computer", 1);
 			player_2 = new Player(player_name, 2);
 		}
-
-		System.out.print("New Game\n");
 	}
 
 	public void resetGame() {
