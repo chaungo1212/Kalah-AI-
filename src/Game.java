@@ -61,6 +61,45 @@ public class Game extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		/*
+		 *set variable number of buttons
+		 *with one action listener to rule them all
+		 * 
+		ActionListener a = new ActionListener() {
+
+			   public void actionPerformed(ActionEvent evt) {
+			       if (evt.getSource() == buttons[0][0]) {
+
+			       }
+			       // etc
+			       // common handling
+			   }
+			};
+
+			for (int i = 0; i < 2; ++i){
+				  for (int j = 0; j < width; ++j) {
+					    buttons[i][j].addActionListener(a);
+				  }
+			}
+	*/
+		
+		/*
+		 *add image to each of the buttons
+		 *
+    for(int i=0;i<30;i++){
+        buttons[i] = new JButton("label"+ i);
+        buttons[i].setBackground(Color.white);
+        if (i < 10) {
+           if (i%2 == 0) {
+             buttons[i].setIcon(piece2);
+           } else {
+             buttons[i].setIcon(piece1);
+           }
+        }
+        panel.add(buttons[i]);
+    }
+		 */
+		
 		JButton Button1 = new JButton("1");
 		Button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

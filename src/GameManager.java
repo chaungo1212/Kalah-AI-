@@ -25,6 +25,7 @@ public class GameManager {
 	Scanner reader = new Scanner(System.in);
 
 	public GameManager() {
+		newGame();
 	}
 
 	public void makeMove(int location) {

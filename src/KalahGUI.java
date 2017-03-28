@@ -86,6 +86,10 @@ public class KalahGUI {
 		frame.getContentPane().add(textFieldUsername);
 		textFieldUsername.setColumns(10);
 		
+		//save username for player constructor
+		
+		//save player number for player constructor
+		
 		/*
 		 * JButton btnSaveUsername = new JButton("Save");
 		 * btnSaveUsername.addActionListener(new ActionListener() { public void

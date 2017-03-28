@@ -14,7 +14,7 @@ public class KalahMain {
 		 ****************************************************/
 
 		GameManager game_manager = new GameManager();
-		game_manager.newGame();
+		//game_manager.newGame();
 
 		/*****************************************************
 		 * Main Game Loop
@@ -39,7 +39,7 @@ public class KalahMain {
 				System.out.println("Enter Location: ");
 				location = reader.nextInt();
 
-				if (game_manager.isValidMove(location)) {
+				if (GameManager.isValidMove(location)) {
 					game_manager.makeMove(location);
 				} else if (location == -1) {
 
@@ -50,7 +50,7 @@ public class KalahMain {
 					System.out.print("Invalid Move\n");
 				}
 			}
-			if (game_manager.checkTimer() == max_time) {
+			if (game_manager.checkTimer() >= max_time) {
 				System.out.print("You ran out of time\n");
 			}
 			game_manager.updateGame();
