@@ -174,7 +174,7 @@ public class KalahGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				frame.dispose();
-				Game game = new Game();
+				Game game = new Game(houses_per, seeds_per);
 				game.setVisible(true);
 			}
 		});

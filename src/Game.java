@@ -49,7 +49,7 @@ public class Game extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Game frame = new Game();
+					Game frame = new Game("6", "4");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,32 +65,30 @@ public class Game extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Game() {
+	public Game(String houses_per, String seeds_per) {
 		setTitle("Kalah Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 631, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		ButtonsListener listener = new ButtonsListener();
 
 		//moves = new Queue<String>;
 		
-		/*
-		 * set variable number of buttons
-		 * make buttons and store in matrix
-		 * 
+		 //set variable number of buttons
+		 //make buttons and store in matrix
 		   	for (int i = 0; i < 2; i++) {
-		   		for (int j = 0; j < seeds_per*2; i++) {
+		   		for (int j = 0; j < Integer.parseInt(houses_per)*2; i++) {
 		   			buttons[i][j] = new JButton("j");
 		   		}
 		 	}
-		 */
 		
-		/*
-		 *with one action listener to rule them all
-		 * 
+		//with one action listener to rule them all
 		ActionListener a = new ActionListener() {
+
+			   public void actionPerformed(ActionEvent evt) {
+			       if (evt.getSource() == buttons[0][0]) {
+
 			       }
 			       // etc
 			       // common handling
@@ -98,32 +96,33 @@ public class Game extends JFrame {
 			};
 
 			for (int i = 0; i < 2; ++i){
-				  for (int j = 0; j < width; ++j) {
+				  for (int j = 0; j < Integer.parseInt(houses_per); ++j) {
 					    buttons[i][j].addActionListener(a);
 				  }
 			}
-	*/
 		
 		/*
 		 *add image to each of the buttons, if necessary (perhaps color code them for valid/invalid?)
 		 *
-    for(int i=0;i<30;i++){
-        buttons[i] = new JButton("label"+ i);
-        buttons[i].setBackground(Color.white);
-        if (i < 10) {
-           if (i%2 == 0) {
-             buttons[i].setIcon(piece2);
-           } else {
-             buttons[i].setIcon(piece1);
-           }
-        }
-        panel.add(buttons[i]);
-    }
+   for(int i=0;i<30;i++){
+       buttons[i] = new JButton("label"+ i);
+       buttons[i].setBackground(Color.white);
+       if (i < 10) {
+          if (i%2 == 0) {
+            buttons[i].setIcon(piece2);
+          } else {
+            buttons[i].setIcon(piece1);
+          }
+       }
+       panel.add(buttons[i]);
+   }
 		 */
 		
-		JButton Button1 = new JButton("1");
-		button1.addActionListener(listener);
 		
+		ButtonsListener listener = new ButtonsListener();
+		
+		JButton button1 = new JButton("1");
+		button1.addActionListener(listener);
 
 		JButton button2 = new JButton("2");
 		button2.addActionListener(listener);
