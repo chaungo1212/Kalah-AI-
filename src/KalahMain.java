@@ -31,29 +31,66 @@ public class KalahMain {
 		location = reader.nextInt();
 
 		while (!game_manager.isGameOver()) {
-			game_manager.startTimer();
+			// p1 turn
+			if (game_manager.player_1.getUsername() != "computer") {
+				
+				game_manager.startTimer();
 
-			while (game_manager.checkTimer() != max_time) {
-				game_manager.drawGame();
+				while (game_manager.checkTimer() != max_time) {
+					game_manager.drawGame();
 
-				System.out.println("Enter Location: ");
-				location = reader.nextInt();
+					System.out.println("Enter Location: ");
+					location = reader.nextInt();
 
-				if (GameManager.isValidMove(location)) {
-					game_manager.makeMove(location);
-				} else if (location == -1) {
-
-					game_manager.newGame();
-				} else if (location == -2) {
-					game_manager.resetGame();
-				} else {
-					System.out.print("Invalid Move\n");
+					if (GameManager.isValidMove(location)) {
+						game_manager.makeMove(location);
+						break;
+					} else if (location == -1) {
+						game_manager.newGame();
+					} else if (location == -2) {
+						game_manager.resetGame();
+					} else {
+						System.out.print("Invalid Move\n");
+					}
 				}
+				if (game_manager.checkTimer() >= max_time) {
+					System.out.print("You ran out of time\n");
+				}
+				game_manager.updateGame();
 			}
-			if (game_manager.checkTimer() >= max_time) {
-				System.out.print("You ran out of time\n");
+			else {
+				//run computer turn
 			}
-			game_manager.updateGame();
+			
+			// p2 turn
+			if (game_manager.player_2.getUsername() != "computer") {
+				game_manager.startTimer();
+
+				while (game_manager.checkTimer() != max_time) {
+					game_manager.drawGame();
+
+					System.out.println("Enter Location: ");
+					location = reader.nextInt();
+
+					if (GameManager.isValidMove(location)) {
+						game_manager.makeMove(location);
+						break;
+					} else if (location == -1) {
+						game_manager.newGame();
+					} else if (location == -2) {
+						game_manager.resetGame();
+					} else {
+						System.out.print("Invalid Move\n");
+					}
+				}
+				if (game_manager.checkTimer() >= max_time) {
+					System.out.print("You ran out of time\n");
+				}
+				game_manager.updateGame();
+			}
+			else {
+				//run computer turn
+			}
 
 		}
 

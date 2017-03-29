@@ -31,6 +31,7 @@ public class Game extends JFrame {
 	private JPanel contentPane;
 	private JPanel content;
 	private JFrame frame;
+	private JButton[][] buttons;
 	private Queue<String> moves;
 	private boolean moveleftToRight;
 	static Board board;
@@ -71,11 +72,72 @@ public class Game extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+<<<<<<< HEAD
 		ButtonsListener listener = new ButtonsListener();
+=======
+		//moves = new Queue<String>;
+		
+		/*
+		 * set variable number of buttons
+		 * make buttons and store in matrix
+		 * 
+		   	for (int i = 0; i < 2; i++) {
+		   		for (int j = 0; j < seeds_per*2; i++) {
+		   			buttons[i][j] = new JButton("j");
+		   		}
+		 	}
+		 */
+		
+		/*
+		 *with one action listener to rule them all
+		 * 
+		ActionListener a = new ActionListener() {
+>>>>>>> branch 'static' of https://github.tamu.edu/swhite/Kalah_315.git
 
 		JButton button1 = new JButton("1");
 		button1.addActionListener(listener);
 
+<<<<<<< HEAD
+=======
+			       }
+			       // etc
+			       // common handling
+			   }
+			};
+
+			for (int i = 0; i < 2; ++i){
+				  for (int j = 0; j < width; ++j) {
+					    buttons[i][j].addActionListener(a);
+				  }
+			}
+	*/
+		
+		/*
+		 *add image to each of the buttons, if necessary (perhaps color code them for valid/invalid?)
+		 *
+    for(int i=0;i<30;i++){
+        buttons[i] = new JButton("label"+ i);
+        buttons[i].setBackground(Color.white);
+        if (i < 10) {
+           if (i%2 == 0) {
+             buttons[i].setIcon(piece2);
+           } else {
+             buttons[i].setIcon(piece1);
+           }
+        }
+        panel.add(buttons[i]);
+    }
+		 */
+		
+		JButton Button1 = new JButton("1");
+		Button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//insert move into action queue
+				moves.add("1");
+			}
+		});
+		
+>>>>>>> branch 'static' of https://github.tamu.edu/swhite/Kalah_315.git
 		JButton button2 = new JButton("2");
 		button2.addActionListener(listener);
 
