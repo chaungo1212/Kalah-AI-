@@ -72,9 +72,8 @@ public class Game extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-<<<<<<< HEAD
 		ButtonsListener listener = new ButtonsListener();
-=======
+
 		//moves = new Queue<String>;
 		
 		/*
@@ -92,13 +91,6 @@ public class Game extends JFrame {
 		 *with one action listener to rule them all
 		 * 
 		ActionListener a = new ActionListener() {
->>>>>>> branch 'static' of https://github.tamu.edu/swhite/Kalah_315.git
-
-		JButton button1 = new JButton("1");
-		button1.addActionListener(listener);
-
-<<<<<<< HEAD
-=======
 			       }
 			       // etc
 			       // common handling
@@ -130,14 +122,9 @@ public class Game extends JFrame {
 		 */
 		
 		JButton Button1 = new JButton("1");
-		Button1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//insert move into action queue
-				moves.add("1");
-			}
-		});
+		button1.addActionListener(listener);
 		
->>>>>>> branch 'static' of https://github.tamu.edu/swhite/Kalah_315.git
+
 		JButton button2 = new JButton("2");
 		button2.addActionListener(listener);
 
