@@ -6,11 +6,14 @@ import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Dimension;
 import java.awt.Color;
+
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.UIManager;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -18,19 +21,27 @@ import java.awt.Image;
 import javax.swing.JTextField;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.util.Queue;
 import java.awt.event.ActionEvent;
 
 public class KalahGUI {
-
+	public int seedsNum;
 	private JFrame frame;
 	private JTextField textFieldUsername;
 	private JTextField textFieldSeeds;
+	private String houses_per;
+	private String seeds_per;
+	private static final String default_house = "6";
+	private static final String default_seeds = "4";
 
 	/**
 	 * Launch the application.
@@ -88,6 +99,7 @@ public class KalahGUI {
 		
 		//save username for player constructor
 		
+		
 		//save player number for player constructor
 		
 		/*
@@ -103,6 +115,14 @@ public class KalahGUI {
 		frame.getContentPane().add(seedsNum);
 		
 		textFieldSeeds = new JTextField();
+		textFieldSeeds.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+				seeds_per = textFieldSeeds.getText();
+				//seedsNum.setText(input);
+				//JOptionPane.showConfirmDialog(null, seedsNum);
+			}
+		});
 		textFieldSeeds.setBounds(112, 102, 108, 20);
 		frame.getContentPane().add(textFieldSeeds);
 		textFieldSeeds.setColumns(10);
@@ -129,11 +149,10 @@ public class KalahGUI {
 		JButton btnSaveSeeds = new JButton("Save");
 		btnSaveSeeds.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int seedsNum = 0;
 				try {
-					int temp = Integer.parseInt(textFieldSeeds.getText());
+					int temp = Integer.parseInt(seeds_per);
 					if (temp < 10 && temp > 0) {
-						seedsNum = temp;
+						
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Please enter a Number from 1 to 10");
@@ -153,6 +172,7 @@ public class KalahGUI {
 		btnNext.addActionListener(new ActionListener() {
 			//go to the next frame
 			public void actionPerformed(ActionEvent arg0) {
+				
 				frame.dispose();
 				Game game = new Game();
 				game.setVisible(true);
@@ -161,13 +181,12 @@ public class KalahGUI {
 		btnNext.setBounds(305, 233, 89, 23);
 		frame.getContentPane().add(btnNext);
 
-		// image
-	/*	JLabel lblImage = new JLabel(" ");
+	/*	// image
+		JLabel lblImage = new JLabel(" ");
 		Image img = new ImageIcon(this.getClass().getResource("welcome-icon.png")).getImage();
 		lblImage.setIcon(new ImageIcon(img));
 		lblImage.setBounds(275, 53, 166, 256);
 		frame.getContentPane().add(lblImage);*/
-
 	}
 	
 }
