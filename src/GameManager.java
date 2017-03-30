@@ -11,6 +11,7 @@ public class GameManager {
 	Player player_1;
 	Player player_2;
 	KalahGUI gui;
+	boolean started = false;
 
 	int houses;
 	int seeds_per;
@@ -22,11 +23,16 @@ public class GameManager {
 	Scanner reader = new Scanner(System.in);
 
 	public GameManager() {
+		KalahGUI gui = new KalahGUI();
 	}
 
 	public void makeMove(int location) {
 		System.out.print("Updating Game\n");
 		board.sowSeeds(location);
+	}
+	
+	public boolean isStarted(){
+		return started;
 	}
 
 	public boolean isValidMove(int location) {

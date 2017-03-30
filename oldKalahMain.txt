@@ -11,7 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class KalahMain {
+public class oldKalahMain {
 
 	public static void main(String[] args) throws IOException {		
 		/*****************************************************
