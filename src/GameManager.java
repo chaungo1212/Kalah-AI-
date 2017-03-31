@@ -156,6 +156,7 @@ public class GameManager {
 			player_2 = new Player(player_name);
 		}
 		
+		player_1.setTurn(true);
 		in.close();
 	}
 	

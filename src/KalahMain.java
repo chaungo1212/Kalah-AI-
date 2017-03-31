@@ -18,16 +18,26 @@ public class KalahMain {
 				break;
 			}
 			else {
-				//p1 turn
-					//update server
-					//update board
-					//update GUI
-					//p2 turn = true
-				//p2 turn
-					//update server
-					//update board
-					//update GUI
-					//p1 turn = true
+				if (gm.player_1.getTurn() == true) {
+					//while (getMove()) {
+						//get move
+						//update server
+						//update board
+						//update GUI
+					//}
+					gm.player_1.setTurn(false);
+					gm.player_2.setTurn(true);
+				}
+				else {
+					//while (getMove()) {
+						//get move
+						//update server
+						//update board
+						//update GUI
+					//}
+					gm.player_1.setTurn(true);
+					gm.player_2.setTurn(false);
+				}
 			}
 		}
 		return gm.whoWon();
