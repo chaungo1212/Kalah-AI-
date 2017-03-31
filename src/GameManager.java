@@ -41,11 +41,30 @@ public class GameManager {
 	}
 
 	public boolean isValidMove(int location) {
-		return true;
+		if (location > 0 && location < board.getSeeds().length-1) {
+			if (player_1.getTurn() == true) {
+				if (location <= board.getSeeds().length-1/2) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				if (location > board.getSeeds().length-1/2) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void startTimer() {
 		System.out.print("Starting timer\n");
+		timer = 0;
 	}
 
 	public int checkTimer() {
