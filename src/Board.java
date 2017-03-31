@@ -60,21 +60,21 @@ public class Board {
 		int remaining = getNumSeeds(house);
 		
 		//make sure player can only put in their store
-		/*if(p1)
+		if(original > seeds.length/2)
+		{
+			if(house == 0)
+			{
+				house = (seeds.length/2)+1;
+			}
+
+		}
+		else
 		{
 			if(house == seeds.length-1)
 			{
 				house = (seeds.length/2);
 			}
 		}
-		else if (!p1)
-		{
-			if(house == 0)
-			{
-				house = (seeds.length/2)+1;
-			}
-		}
-		*/
 		
 		while (remaining != 0) {
 			if (house == 0 || house == (seeds.length - 1)) {
@@ -143,5 +143,52 @@ public class Board {
 
 	public int getP2Score() {
 		return seeds[seeds.length - 1];
+	}
+	
+	public int[] getH1Seeds() {
+		int[] half = getSeeds();
+		int j = 0;
+		for (int i = 0; i < seeds.length; i++) {
+			if (!(i == 0) || !(i == seeds.length-1) || !(i > ((seeds.length-1)/2))) {
+				half[j] = seeds[i];
+				j++;
+			}
+		}
+		return half;
+	}
+	
+	public int[] getH2Seeds() {
+		int[] half = getSeeds();
+		int j = 0;
+		for (int i = 0; i < seeds.length; i++) {
+			if (!(i == 0) || !(i == seeds.length-1) || !(i < ((seeds.length-1)/2))) {
+				half[j] = seeds[i];
+				j++;
+			}
+		}
+		return half;
+	}
+	
+	public int sumSide(int[] side) {
+		int sum = 0;
+		for (int i : side) {
+			sum += i;
+		}
+		return sum;
+	}
+	
+	public boolean finished() {
+		if (sumSide(getH1Seeds()) == 0 || sumSide(getH2Seeds()) == 0) {
+			if (sumSide(getH1Seeds()) == 0) {
+				//add remainder to other player's store
+				seeds[seeds.length-1] += sumSide(getH2Seeds());
+			}
+			else {
+				//add remainder to other player's store
+				seeds[0] += sumSide(getH1Seeds());
+			}
+			return true;
+		}
+		return false;
 	}
 }

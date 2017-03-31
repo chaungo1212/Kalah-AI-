@@ -12,18 +12,23 @@ public class GameManager {
 	Player player_2;
 	KalahGUI gui;
 	boolean started = false;
+	boolean game_over = false;
 
 	int houses;
 	int seeds_per;
-	int player_choice = -1;
-	int scoreP1;
-	int scoreP2;
-	String player_name;
+	private int scoreP1;
+	private int scoreP2;
+	int timer_val;
+	int timer;
+	char player_choice = 'z';
+	String player_name = "player";
+	String file_name = "test.txt";
 
 	Scanner reader = new Scanner(System.in);
 
 	public GameManager() {
-		KalahGUI gui = new KalahGUI();
+		newGame();
+		gui = new KalahGUI();
 	}
 
 	public void makeMove(int location) {
@@ -44,19 +49,30 @@ public class GameManager {
 	}
 
 	public int checkTimer() {
-		return 1;
+		return timer;
 	}
 
 	public boolean timeIsOut() {
-		return false;
-	}
-
-	public boolean isGameOver() {
-		return false;
+		if (timer >= timer_val) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public Player whoWon() {
-		return player_1;
+		if (scoreP1 > scoreP2) {
+			return player_1;
+		}
+		else if (scoreP1 < scoreP2) {
+			return player_2;
+		}
+		else {
+			Player tie = new Player("tie");
+			tie.setScore(scoreP1);
+			return tie;
+		}
 	}
 
 	public int getP1Score() {
@@ -75,39 +91,57 @@ public class GameManager {
 		this.scoreP2 = score;
 	}
 
-	public void updateGame() {
-		System.out.print("Updating Game\n");
-	}
-
 	public void newGame() {
+		Scanner in = new Scanner(file_name);
+		
+		//read # houses from file
+		houses = in.nextInt();
 
-		System.out.print("Welcome to the game of kalah!\n");
+		//read # seeds from file
+		seeds_per = in.nextInt();
 
-		System.out.println("Enter the number of houses: ");
-		houses = reader.nextInt();
-
-		System.out.println("Enter the number of seeds per house: ");
-		seeds_per = reader.nextInt();
-
-		while (player_choice != 1 && player_choice != 2) {
-			System.out.println("Would you like to be player 1 or 2?\nEnter 1 or 2: ");
-			player_choice = reader.nextInt();
+		//if next is digit, read timer value
+		if (in.hasNextInt())
+		{
+			timer_val = in.nextInt();
 		}
 
-		System.out.println("Username: ");
-		player_name = reader.next();
+		//read if client goes first or second
+		player_choice = in.next().charAt(0);
+		
+		//read if static # of seeds or random
+		if (in.next().charAt(0) == 'R') {
+			int[] seeds = new int[houses];
+			for(int i = 0; i > houses; i++) {
+				if (in.hasNextInt()) {
+					seeds[i] = in.nextInt();	
+				}
+			}
+			board = new Board(houses, seeds);
+		}
+		else {
+			board = new Board(houses, seeds_per);
+		}
+		
+		//*******get user name of player?
+		//System.out.println("Username: ");
+		//player_name = reader.next();
 
-		board = new Board(houses, seeds_per);
-
-		if (player_choice == 1) {
+		//create and set players
+		if (player_choice == 'F') {
 			player_1 = new Player(player_name);
 			player_2 = new Player("computer");
-		} else {
+		}
+		else {
 			player_1 = new Player("computer");
 			player_2 = new Player(player_name);
 		}
-
-		System.out.print("New Game\n");
+		
+		in.close();
+	}
+	
+	public void updateGame() {
+		System.out.print("Updating Game\n");
 	}
 
 	public void resetGame() {
@@ -118,9 +152,4 @@ public class GameManager {
 	public void drawGame() {
 		board.drawBoard();
 	}
-	
-	/*
-	 * Need a function to tell board whose turn it is
-	 */
-
 }

@@ -7,11 +7,12 @@
 import java.util.Random;
 import java.util.Vector;
 
-public class AI {
+public class AI extends Player{
 	private char type;
 	private Vector<Integer> memory;
 	
 	public AI(char c) {
+		super("computer");
 		type = c;
 		memory = new Vector<Integer>();
 	}
@@ -29,6 +30,7 @@ public class AI {
 	public int runE() {
 		//pick randomly from valid moves
 		Random rand = new Random();
+		
 		int front = 0;
 		int back = 0;
 		return rand.nextInt(back - front + 1) + front;

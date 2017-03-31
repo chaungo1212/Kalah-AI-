@@ -125,8 +125,8 @@ public class KalahGUI {
 		JButton btnSaveSeeds = new JButton("Save");
 		btnSaveSeeds.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int seedsNum = 0;
 				try {
+					int seedsNum = 0;
 					int temp = Integer.parseInt(textFieldSeeds.getText());
 					if (temp < 10 && temp > 0) {
 						seedsNum = temp;

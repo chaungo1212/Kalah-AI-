@@ -6,23 +6,31 @@
 
 public class Player {
 	private String username;
-	int score;
+	private int score;
 	boolean turn = false;
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String new_username) {
+		this.username = new_username;
 	}
 
 	public boolean getTurn() {
 		return turn;
 	}
 
-	public void setTurn(boolean turn) {
-		this.turn = turn;
+	public void setTurn(boolean new_turn) {
+		this.turn = new_turn;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+	
+	public void setScore(int new_score) {
+		score = new_score;
 	}
 
 	/*public boolean makeMove(Board board, int seed, int from_house, int to_house) {

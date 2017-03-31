@@ -11,3 +11,7 @@ Hey guys can yall text me? I lost yalls numbers?
   - Eric Munoz: 
     - 832-375-4203
     - ericmunoz147@tamu.edu
+    
+    Client Server Resources:
+    	http://cs.lmu.edu/~ray/notes/javanetexamples/
+    	https://goo.gl/hrOv4s
