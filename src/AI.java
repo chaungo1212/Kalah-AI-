@@ -30,10 +30,13 @@ public class AI extends Player{
 	public int runE() {
 		//pick randomly from valid moves
 		Random rand = new Random();
-		
-		int front = 0;
-		int back = 0;
-		return rand.nextInt(back - front + 1) + front;
+		int move = 0;
+		//int max = 13;
+		//pick randomly from valid moves
+		//while (!isValidMove(move)) {
+		//	move = rand.nextInt(1, max);
+		//}
+		return move;
 	}
 	
 	public void runM() {

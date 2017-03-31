@@ -93,7 +93,7 @@ public class Board {
 		}
 		//if last seed in a store
 		if (house == 0 || house == (seeds.length - 1)) {
-			//increase # of turns
+			//***** increase # of turns
 		}
 		
 		// if last seed in empty house
