@@ -1,3 +1,4 @@
+import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ConnectException;
@@ -14,38 +15,7 @@ public class Client {
 	
 	private static final String red = "READY";
 	private static final String ok = "OK";
-
-	public static Player startGame(GameManager gm) {
-		while(!gm.game_over) {
-			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
-				gm.game_over = true;
-				break;
-			}
-			else {
-				if (gm.player_1.getTurn() == true) {
-					//while (getMove()) {
-						//get move
-						//update server
-						//update board
-						//update GUI
-					//}
-					gm.player_1.setTurn(false);
-					gm.player_2.setTurn(true);
-				}
-				else {
-					//while (getMove()) {
-						//get move
-						//update server
-						//update board
-						//update GUI
-					//}
-					gm.player_1.setTurn(true);
-					gm.player_2.setTurn(false);
-				}
-			}
-		}
-		return gm.whoWon();
-	}
+	private static final String again = "AGAIN";
 	
 	public Client() throws IOException {
 		client_socket = new Socket("127.0.0.1", 4444);
@@ -74,7 +44,7 @@ public class Client {
 			client_scanner.close();
 		}
 		catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: localhost.");
+            System.err.println("Couldn't close client");
             System.exit(1);
 		}
 		catch (Exception e) {
@@ -107,6 +77,18 @@ public class Client {
 				c.setMessage(red);	//sends READY
 				p_stream.println(c.getMessage());
 				
+				KalahGUI gui = new KalahGUI();
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							KalahGUI window = new KalahGUI();
+							window.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
 				//start game
 				//while not game over
 					//if client turn
@@ -126,6 +108,8 @@ public class Client {
 				}
 				else {
 					quit = false;
+					c.setMessage(again);	//sends AGAIN
+					p_stream.println(c.getMessage());
 				}
 			}
 			

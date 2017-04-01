@@ -23,15 +23,16 @@ public class Server {
 	private static final String loss = "LOSER";
 	private static final String win = "WINNER";
 	private static final String tie = "TIE";
+	private static final String again = "AGAIN";
 	
 	public Server() throws IOException {
+		parseFile();
 		listener = new ServerSocket(4444); //getting an error because port number is taken on this computer
 		server_socket = listener.accept(); 	//causes blocking so you want to make some kind of threading that
 													// the server listens on, and another thread where is reads/writes
 		socket_scanner = new Scanner(server_socket.getInputStream());
 		closed = false;
 		stopped = false;
-		parseFile();
 	}
 	
 	public String getMessage() {
@@ -50,6 +51,10 @@ public class Server {
 		return stopped;
 	}
 	
+	public void setStopped(boolean new_stop) {
+		stopped = new_stop;
+	}
+	
 	public Socket getSocket() {
 		return server_socket;
 	}
@@ -62,17 +67,31 @@ public class Server {
 		return socket_scanner;
 	}
 	
+	public String getGameConfig() {
+		return game_config;
+	}
+	
+	public void setGameConfig(String new_config) {
+		game_config = new_config;
+	}
+	
 	public void parseFile() throws FileNotFoundException {
 		try {
-			File file = new File("game.txt");
+			File file = new File("game2.txt");
 			Scanner inputFile = new Scanner(file);
 			while (inputFile.hasNext()) {
-				game_config = inputFile.nextLine();
+				setGameConfig(inputFile.nextLine().trim());
+				System.out.println(getGameConfig());
 			}
 			inputFile.close();
+			return;
+		}
+		catch (FileNotFoundException e) {
+			System.err.println("Couldn't open game config file");
+			System.exit(0);
 		}
 		catch (Exception e) {
-			System.err.println("Couldn't open game config file");
+			System.err.println("Exception thrown while parsing file");
 			System.exit(0);
 		}
 	}
@@ -88,15 +107,48 @@ public class Server {
 			}
 		  }
 		  catch(Exception e) {
-			  //catch exceptions
+				System.err.println("Couldn't close server");
+				System.exit(0);
 		  }
+	}
+	
+	public Player startGame(GameManager gm) {
+		while(!gm.game_over) {
+			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
+				gm.game_over = true;
+				break;
+			}
+			else {
+				if (gm.player_1.getTurn() == true) {
+					//while (getMove()) {
+						//get move
+						//update server
+						//update board
+						//update GUI
+					//}
+					gm.player_1.setTurn(false);
+					gm.player_2.setTurn(true);
+				}
+				else {
+					//while (getMove()) {
+						//get move
+						//update server
+						//update board
+						//update GUI
+					//}
+					gm.player_1.setTurn(true);
+					gm.player_2.setTurn(false);
+				}
+			}
+		}
+		return gm.whoWon();
 	}
 	
 	public static void main(String args[]) throws IOException {
 		try {
 			Server s = new Server();
 			while (!s.getStopped()) {
-				if (s.getSocket().isConnected()) {
+				while (s.getSocket().isConnected()) {
 					PrintStream p_stream = new PrintStream(s.getSocket().getOutputStream());
 					s.setMessage(wel);
 					p_stream.println(s.getMessage());
@@ -104,6 +156,7 @@ public class Server {
 					p_stream.println(s.getMessage());
 					if (s.getSocketScan().nextLine() == red) {
 						GameManager game_manager = new GameManager();
+						s.startGame(game_manager);
 					//if AI
 						//start game
 							//if client turn,
@@ -142,6 +195,14 @@ public class Server {
 									//setMessage(win);
 									//p_stream.println(getMessage());
 								
+					}
+					if (s.getSocketScan().hasNext()) {
+						if (s.getSocketScan().nextLine() == again) {
+							s.setStopped(false);
+						}
+					}
+					else {
+						s.setStopped(true);
 					}
 				}
 			}
