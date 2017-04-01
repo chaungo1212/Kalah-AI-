@@ -172,7 +172,7 @@ public class KalahGUI extends JFrame {
 				houses_per = textFieldHouse.getText();
 				if (username.equals("") || seeds_per.equals("") || group.getSelection() == null
 						|| houses_per.equals("")) {
-					JOptionPane.showMessageDialog(null, "Please fill in all the blank and select difficulty ");
+					JOptionPane.showMessageDialog(null, "Please fill in all the blanks and select difficulty ");
 				} else {
 					int seedsTemp = Integer.parseInt(seeds_per);
 					int houseTemp = Integer.parseInt(houses_per);

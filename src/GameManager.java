@@ -160,6 +160,51 @@ public class GameManager {
 		in.close();
 	}
 	
+	public void newGame(int house, int seed, int time, char turn_num, char set_rand, int[] random) {
+		//read # houses per side
+		houses = house;
+
+		//read # seeds
+		seeds_per = seed;
+
+		//if next is digit, read timer value
+		if (time != 0)
+		{
+			timer_val = time;
+		}
+
+		//read if client goes first or second
+		player_choice = turn_num;
+		
+		//read if static # of seeds or random
+		if (set_rand == 'R') {
+			int[] seeds = new int[houses];
+			for(int i = 0; i > houses; i++) {
+					seeds[i] = random[i];	
+			}
+			board = new Board(houses, seeds);
+		}
+		else {
+			board = new Board(houses, seeds_per);
+		}
+		
+		//*******get user name of player?
+		//System.out.println("Username: ");
+		//player_name = reader.next();
+
+		//create and set players
+		if (player_choice == 'F') {
+			player_1 = new Player(player_name);
+			player_2 = new Player("computer");
+		}
+		else {
+			player_1 = new Player("computer");
+			player_2 = new Player(player_name);
+		}
+		
+		player_1.setTurn(true);
+	}
+	
 	public void updateGame() {
 		System.out.print("Updating Game\n");
 	}

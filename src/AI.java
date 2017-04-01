@@ -29,7 +29,7 @@ public class AI extends Player{
 	
 	public int runE() {
 		//pick randomly from valid moves
-		Random rand = new Random();
+		//Random rand = new Random();
 		int move = 0;
 		//int max = 13;
 		//pick randomly from valid moves

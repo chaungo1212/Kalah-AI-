@@ -4,15 +4,24 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-//not sure where to place
+/*
+	command ::== info| move | ack
+	info ::== INFO game_config
+	move ::== hole (hole)* | P
+	WELCOME | READY | OK | ILLEGAL | TIME | LOSER | WINNER | TIE
+	game_config ::== <int for holes per side> <int for seeds per side> <long int for time> <F | S> <S | R hole_config>
+	hole_config ::== <int for seeds in hole 1> … <int for seeds in hole h> 
+ */
+
 public class Server {
-	private String message;
+	
+	private static String message;
 	private static ServerSocket listener;
 	private static Socket server_socket;
 	private static Scanner socket_scanner;
-	private static boolean closed;
-	private boolean stopped;
-	private String game_config;
+	private static boolean closed = false;
+	private static boolean stopped = false;
+	private static String game_config;
 	
 	private static final String wel = "WELCOME";
 	private static final String red = "READY";
@@ -32,31 +41,31 @@ public class Server {
 		stopped = false;
 	}
 	
-	public String getMessage() {
+	public static String getMessage() {
 		return message;
 	}
 	
-	public void setMessage(String new_message) {
+	public static void setMessage(String new_message) {
 		message = new_message;
 	}
 	
-	public boolean getClosed() {
+	public static boolean getClosed() {
 		return closed;
 	}
 	
-	public boolean getStopped() {
+	public static boolean getStopped() {
 		return stopped;
 	}
 	
-	public Socket getSocket() {
+	public static Socket getSocket() {
 		return server_socket;
 	}
 	
-	public ServerSocket getListener() {
+	public static ServerSocket getListener() {
 		return listener;
 	}
 	
-	public Scanner getSocketScan() {
+	public static Scanner getSocketScan() {
 		return socket_scanner;
 	}
 	
@@ -70,23 +79,25 @@ public class Server {
 			    socket_scanner.close();
 			}
 		  }
+		  catch (IOException i) {
+	          System.err.println("Couldn't close localhost.");
+	          System.exit(1);
+		  }
 		  catch(Exception e) {
-			  //catch exceptions
+			  System.exit(1);
 		  }
 	}
 	
 	public static void main(String args[]) throws IOException {
 		try {
-			Server s = new Server();
-			while (!s.getStopped()) {
-				if (s.getSocket().isConnected()) {
-					PrintStream p_stream = new PrintStream(s.getSocket().getOutputStream());
-					s.setMessage(wel);
-					p_stream.println(s.getMessage());
-					s.setMessage("INFO" + s.game_config);
-					p_stream.println(s.getMessage());
-					if (s.getSocketScan().nextLine() == red) {
-						GameManager game_manager = new GameManager();
+			while (!getStopped()) {
+				if (getSocket().isConnected()) {
+					PrintStream p_stream = new PrintStream(getSocket().getOutputStream());
+					setMessage(wel);
+					p_stream.println(getMessage());
+					setMessage("INFO" + game_config);
+					p_stream.println(getMessage());
+					if (getSocketScan().nextLine() == red) {
 					//if AI
 						//start game
 							//if client turn,
@@ -98,7 +109,7 @@ public class Server {
 									//setMessage(loss);
 									//p_stream.println(getMessage());
 								//else
-								//check if player_move (message) is valid
+								//check if is valid
 								//if is not valid
 									//setMessage(ill);
 									//p_stream.println(getMessage());
@@ -110,23 +121,15 @@ public class Server {
 							//else (if server turn)
 								//AI_move = AI_getmove();
 								//setMessage(AI_move);
-								//p_stream.println(getMessage());
-								//check if time out
-								//if time out
-									//setMessage(time);
-									//p_stream.println(getMessage());
-									//setMessage(win);
-									//p_stream.println(getMessage());
-								//else
-								//check if AI_move is valid
-								//if is not valid
-									//setMessage(ill);
-									//p_stream.println(getMessage());
-									//setMessage(win);
-									//p_stream.println(getMessage());
-								
+								//p_stream.println(getMessage());				
 					}
+					
 				}
+				
+				//setMessage(getSocketScan().nextLine());
+				//PrintStream p_stream = new PrintStream(getSocket().getOutputStream());
+				//p_stream.println(getMessage());
+		
 			}
 		}
 		catch (IOException i) {
