@@ -77,7 +77,6 @@ public class Client {
 				c.setMessage(red);	//sends READY
 				p_stream.println(c.getMessage());
 				
-				KalahGUI gui = new KalahGUI();
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
