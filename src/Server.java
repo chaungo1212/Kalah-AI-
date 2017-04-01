@@ -119,8 +119,6 @@ public class Server {
 				break;
 			}
 			else {
-				//if AI
-				//start game
 					//if client turn,
 						//setMessage(getSocketScan().nextLine());
 						//check if time out

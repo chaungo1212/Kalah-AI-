@@ -89,7 +89,6 @@ public class Client {
 					}
 				});
 				
-				//start game
 				//while not game over
 					//if client turn
 						//player_move = getMove(scanner.nextLine());
