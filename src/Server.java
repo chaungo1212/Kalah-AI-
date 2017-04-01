@@ -3,6 +3,7 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.io.*;
 
 //not sure where to place
 public class Server {
@@ -30,6 +31,7 @@ public class Server {
 		socket_scanner = new Scanner(server_socket.getInputStream());
 		closed = false;
 		stopped = false;
+		parseFile();
 	}
 	
 	public String getMessage() {
@@ -58,6 +60,21 @@ public class Server {
 	
 	public Scanner getSocketScan() {
 		return socket_scanner;
+	}
+	
+	public void parseFile() throws FileNotFoundException {
+		try {
+			File file = new File("game.txt");
+			Scanner inputFile = new Scanner(file);
+			while (inputFile.hasNext()) {
+				game_config = inputFile.nextLine();
+			}
+			inputFile.close();
+		}
+		catch (Exception e) {
+			System.err.println("Couldn't open game config file");
+			System.exit(0);
+		}
 	}
 	
 	public static void close() throws IOException {
