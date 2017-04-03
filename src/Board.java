@@ -55,6 +55,8 @@ public class Board {
 		seeds = newSeeds;
 	}
 
+	
+	// ***************************************** Needs work!!!
 	public void sowSeeds(int house) {
 		int original = house;
 		int remaining = getNumSeeds(house);
@@ -100,13 +102,21 @@ public class Board {
 		if (seeds[house] == 1) {
 			// on player one's side
 			if ((original - 0) < (seeds.length - 1) - original) {
-				// capture all on both sides of the board for player 1
-				seeds[0] += seeds[house] + seeds[house + ((seeds.length - 1) / 2)];
+				//if (!other side is empty)
+					
+					// capture all on both sides of the board for player 1
+					seeds[0] += seeds[house] + seeds[house + ((seeds.length - 1) / 2)];
+				//else
+					//don't capture
 			}
 			// on player two's side
 			else if ((original - 0) > (seeds.length - 1) - original) {
-				// capture all on both sides of the board for player 2
-				seeds[(seeds.length - 1)] += seeds[house] + seeds[house - ((seeds.length - 1) / 2)];
+				//if (!other side is empty)
+				
+					// capture all on both sides of the board for player 2
+					seeds[(seeds.length - 1)] += seeds[house] + seeds[house - ((seeds.length - 1) / 2)];
+				//else
+					//don't capture
 			}
 		}
 	}

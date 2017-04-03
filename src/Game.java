@@ -182,7 +182,7 @@ public class Game extends JFrame {
 
 		}
 		// Timer setting allow 10 seconds for user to input
-		remaining_time = 10;
+		remaining_time = 50;
 		time_label.setText(Integer.toString(remaining_time));
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -202,7 +202,7 @@ public class Game extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Refresh remaining_time
-			remaining_time = 10;
+			remaining_time = 50;
 			timer.stop();
 			time_label.setText(Integer.toString(remaining_time));
 			timer.start();

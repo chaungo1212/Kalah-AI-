@@ -17,14 +17,31 @@ public class AI extends Player{
 		memory = new Vector<Integer>();
 	}
 	
-	public void runWhat() {
-		switch(type)
+	public char getType () {
+		return type;
+	}
+	
+	public void setType (char c) {
+		type = c;
+	}
+	
+	public int runWhat(char c) {
+		int move = 0;
+		switch(c)
 		{
-			case 'E': runE();
-			case 'M': runM();
-			case 'H': runH();
+			case 'E':
+				move = runE();
+				break;
+			case 'M':
+				move = runM();
+				break;
+			case 'H':
+				move = runH();
+				break;
 			default:
+				break;
 		}
+		return move;
 	}
 	
 	public int runE() {
@@ -39,12 +56,14 @@ public class AI extends Player{
 		return move;
 	}
 	
-	public void runM() {
+	public int runM() {
 		//use min-max tree to look ahead
+		return 0;
 	}
 
-	public void runH() {
+	public int runH() {
 		//use min-max tree to look ahead
+		return 0;
 	}
 
 

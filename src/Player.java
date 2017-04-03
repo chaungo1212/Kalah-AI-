@@ -8,6 +8,7 @@ public class Player {
 	private String username;
 	private int score;
 	boolean turn = false;
+	private boolean AI;
 
 	public String getUsername() {
 		return username;
@@ -32,7 +33,12 @@ public class Player {
 	public void setScore(int new_score) {
 		score = new_score;
 	}
-
+	
+	public boolean isAI() {
+		return AI;
+	}
+	
+	
 	/*public boolean makeMove(Board board, int seed, int from_house, int to_house) {
 		// Move seed on the board.
 		// Ask board.game_manager to check whether this move is available or not
@@ -52,5 +58,8 @@ public class Player {
 	// Constructor
 	public Player(String player_name) {
 		this.username=player_name;
+		if (player_name.equals("computer")) {
+			AI=true;
+		}
 	}
 }

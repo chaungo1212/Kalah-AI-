@@ -111,67 +111,77 @@ public class Server {
 				System.exit(0);
 		  }
 	}
+	/*
+	public void AI_turn(AI AI, GameManager gm, PrintStream p_stream) {
+		int AI_move = AI.runWhat(AI.getType())
+		if (gm.isValidMove(AI_move))
+		//setMessage(AI_move);
+		//p_stream.println(getMessage());
+		//check if time out
+		//if time out
+			//setMessage(time);
+			//p_stream.println(getMessage());
+			//setMessage(win);
+			//p_stream.println(getMessage());
+		//else
+		//check if AI_move is valid
+		//if is not valid
+			//setMessage(ill);
+			//p_stream.println(getMessage());
+			//setMessage(win);
+			//p_stream.println(getMessage());
+		
+	}
 	
-	public Player startGame(GameManager gm) {
+	public void Player_turn(Player player, GameManager gm, PrintStream p_stream) {
+		String player_move;
+		setMessage(getSocketScan().nextLine());
+		if (gm.timeIsOut()) {
+			setMessage(time);
+			p_stream.println(getMessage());
+			setMessage(loss);
+			p_stream.println(getMessage());
+			gm.game_over = true;
+		}
+		else {
+			player_move = getMessage();
+			if (!gm.isValidMove((Integer.parseInt(player_move)))) {
+				setMessage(ill);
+				p_stream.println(getMessage());
+				setMessage(loss);
+				p_stream.println(getMessage());
+			}
+			else {
+				setMessage(ok);
+				p_stream.println(getMessage());
+			}
+		}
+	}
+	*/
+	public Player startGame(GameManager gm, PrintStream p_stream) {
 		while(!gm.game_over) {
 			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
 				gm.game_over = true;
 				break;
 			}
 			else {
-					//if client turn,
-						//setMessage(getSocketScan().nextLine());
-						//check if time out
-						//if time out
-							//setMessage(time);
-							//p_stream.println(getMessage());
-							//setMessage(loss);
-							//p_stream.println(getMessage());
-						//else
-						//check if player_move (message) is valid
-						//if is not valid
-							//setMessage(ill);
-							//p_stream.println(getMessage());
-							//setMessage(loss);
-							//p_stream.println(getMessage());
-						//else
-							//setMessage(ok);
-							//p_stream.println(getMessage());
-					//else (if server turn)
-						//AI_move = AI_getmove();
-						//setMessage(AI_move);
-						//p_stream.println(getMessage());
-						//check if time out
-						//if time out
-							//setMessage(time);
-							//p_stream.println(getMessage());
-							//setMessage(win);
-							//p_stream.println(getMessage());
-						//else
-						//check if AI_move is valid
-						//if is not valid
-							//setMessage(ill);
-							//p_stream.println(getMessage());
-							//setMessage(win);
-							//p_stream.println(getMessage());
-				
-				if (gm.player_1.getTurn() == true) {
-					//while (getMove()) {
-						//get move
-						//update server
-						//update board
-						//update GUI
-					//}
+				if (gm.player_1.turn) {
+					if (gm.player_1.isAI()) {
+						//AI_turn(gm.player_1, gm, p_stream);
+					}
+					else {
+						//Player_turn(gm.player_1, gm, p_stream);
+					}
 					gm.player_1.setTurn(false);
 					gm.player_2.setTurn(true);
 				}
 				else {
-					//while (getMove()) {
-						//get move
-						//update server
-						//update board
-						//update GUI
-					//}
+					if (gm.player_2.isAI()) {
+						//AI_turn(gm.player_2, gm, p_stream);
+					}
+					else {
+						//Player_turn(gm.player_2, gm, p_stream);
+					}
 					gm.player_1.setTurn(true);
 					gm.player_2.setTurn(false);
 				}
@@ -192,7 +202,7 @@ public class Server {
 					p_stream.println(s.getMessage());
 					if (s.getSocketScan().nextLine() == red) {
 						GameManager game_manager = new GameManager();
-						s.startGame(game_manager);	
+						s.startGame(game_manager, p_stream);	
 					}
 					if (s.getSocketScan().hasNext()) {
 						if (s.getSocketScan().nextLine() == again) {
