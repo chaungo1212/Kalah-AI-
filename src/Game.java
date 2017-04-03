@@ -106,7 +106,7 @@ public class Game extends JFrame {
 		contentPane.add(panelEast, BorderLayout.EAST);
 		JPanel store_label2 = new JPanel();
 		store_label2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		store_label2.setPreferredSize(new Dimension(70, 50));
+		store_label2.setPreferredSize(new Dimension(90, 50));
 		store_label2.setForeground(Color.YELLOW);
 		store_label2.setBackground(Color.DARK_GRAY);
 		store2 = new JLabel("Store 2(0)");
@@ -123,7 +123,7 @@ public class Game extends JFrame {
 		panelNorth.setForeground(Color.YELLOW);
 		panelNorth.setBackground(Color.WHITE);
 		contentPane.add(panelNorth, BorderLayout.NORTH);
-		panelNorth.setPreferredSize(new Dimension(50, 50));
+		panelNorth.setPreferredSize(new Dimension(90, 50));
 
 		/************************/
 		/****** South Panel *******/
