@@ -1,0 +1,91 @@
+	
+	// **********************************************************
+	// ***********************  AI  *****************************
+	// **********************************************************
+	
+	public int getTurn(String new_info) {
+		//game_info = new_info;
+		//houses
+		Integer.parseInt(new_info);
+		//seeds
+		Integer.parseInt(new_info);
+		//time
+		Long.parseLong(new_info);
+		char c = new_info.charAt(0);
+		switch (c) {
+			case 'F':
+				return 0;
+			case 'S':
+				return 1;
+			default:
+				return 0;
+		}
+	}
+	
+public void AICli(AI new_AI) {
+	try {
+		Socket client_socket = new Socket("127.0.0.1", 4444);
+		Scanner client_scanner = new Scanner(client_socket.getInputStream());
+		int turn=0;
+		int client_turn;
+		String message;
+		AI this_AI = new_AI;
+		Scanner scanner = new Scanner(System.in);
+		PrintStream p_stream = new PrintStream(client_socket.getOutputStream());
+	
+		boolean quit = false;
+		
+		while(!quit) {
+			String wel = client_scanner.nextLine(); //gets welcome
+			System.out.println(wel);
+			String gamein = client_scanner.nextLine();
+			System.out.println(gamein);
+			client_turn = getTurn(gamein); //gets game_info
+			
+			message = red;	//sends READY
+			p_stream.println(message);
+			String ai_move;
+			
+			client_scanner.nextLine(); //gets begin
+			
+			while (client_scanner.hasNextLine()) {		
+				String input = client_scanner.nextLine();
+				
+				while (input != "WINNER" || input != "LOSER") {
+					if(turn%2 == client_turn) {
+						ai_move = this_AI.runWhat(this_AI.getType());
+						message = ai_move;	//sends move
+						p_stream.println(message);
+					}
+					else {
+						//input is move
+						message = ok;
+						p_stream.println(message);
+					}
+			}	
+			//bye
+		}
+		}
+		
+		scanner.close();
+		try {
+			client_socket.close();
+			client_scanner.close();
+		}
+		catch (IOException e) {
+            System.err.println("Couldn't close AIclient");
+            System.exit(1);
+		}
+		catch (Exception e) {
+			System.exit(1);
+		}
+	}
+	catch (IOException i) {
+	        System.err.println("Couldn't get I/O for the connection to: localhost.");
+	        System.err.println("Connection refused: localhost.");
+	        System.exit(1);
+	}
+	catch (Exception e) {
+		System.exit(1);
+	}
+}

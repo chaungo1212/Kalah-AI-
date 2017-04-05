@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.io.*;
 
 //not sure where to place
-public class Server {
+public class AIServer {
 	private String message;
 	private static ServerSocket listener;
 	private static Socket server_socket;
@@ -15,8 +15,22 @@ public class Server {
 	private boolean stopped;
 	private String game_config;
 	
+	Board board;
+	Player player_1;
+	Player player_2;
+	KalahGUI gui;
+	private int houses;
+	private int seeds;
+	private long timer;
+	private char turn;
+	private char set_rand;
+	private int[] random;
+	String player_name = "player";
+	String file_name = "test.txt";
+	
 	private static final String wel = "WELCOME";
 	private static final String red = "READY";
+	private static final String beg = "BEGIN";
 	private static final String ok = "OK";
 	private static final String ill = "ILLEGAL";
 	private static final String time = "TIME";
@@ -25,7 +39,7 @@ public class Server {
 	private static final String tie = "TIE";
 	private static final String again = "AGAIN";
 	
-	public Server() throws IOException {
+	public AIServer() throws IOException {
 		parseFile();
 		listener = new ServerSocket(4444); //getting an error because port number is taken on this computer
 		server_socket = listener.accept(); 	//causes blocking so you want to make some kind of threading that
@@ -111,101 +125,91 @@ public class Server {
 				System.exit(0);
 		  }
 	}
-	
-	// **********************************************************
-	// ***********************  AI  *****************************
-	// **********************************************************
-	
-	public int getTurn(String new_info) {
-		//game_info = new_info;
-		//houses
-		Integer.parseInt(new_info);
-		//seeds
-		Integer.parseInt(new_info);
-		//time
-		Long.parseLong(new_info);
-		char c = new_info.charAt(0);
-		switch (c) {
-			case 'F':
-				return 0;
-			case 'S':
-				return 1;
-			default:
-				return 0;
-		}
-	}
-	
-public void AIClient(AI new_AI) {
-	try {
-		Socket client_socket = new Socket("127.0.0.1", 4444);
-		Scanner client_scanner = new Scanner(client_socket.getInputStream());
-		int turn=0;
-		int client_turn;
-		String message;
-		AI this_AI = new_AI;
-		Scanner scanner = new Scanner(System.in);
-		PrintStream p_stream = new PrintStream(client_socket.getOutputStream());
-	
-		boolean quit = false;
-		
-		while(!quit) {
-			String wel = client_scanner.nextLine(); //gets welcome
-			System.out.println(wel);
-			String gamein = client_scanner.nextLine();
-			System.out.println(gamein);
-			client_turn = getTurn(gamein); //gets game_info
-			
-			message = red;	//sends READY
-			p_stream.println(message);
-			String ai_move;
-			
-			client_scanner.nextLine(); //gets begin
-			
-			while (client_scanner.hasNextLine()) {		
-				String input = client_scanner.nextLine();
-				
-				while (input != "WINNER" || input != "LOSER") {
-					if(turn%2 == client_turn) {
-						ai_move = this_AI.runWhat(this_AI.getType());
-						message = ai_move;	//sends move
-						p_stream.println(message);
-					}
-					else {
-						//input is move
-						message = ok;
-						p_stream.println(message);
-					}
-			}	
-			//bye
-		}
-		}
-		
-		scanner.close();
-		try {
-			client_socket.close();
-			client_scanner.close();
-		}
-		catch (IOException e) {
-            System.err.println("Couldn't close AIclient");
-            System.exit(1);
-		}
-		catch (Exception e) {
-			System.exit(1);
-		}
-	}
-	catch (IOException i) {
-	        System.err.println("Couldn't get I/O for the connection to: localhost.");
-	        System.err.println("Connection refused: localhost.");
-	        System.exit(1);
-	}
-	catch (Exception e) {
-		System.exit(1);
-	}
-}
 
 
 // **************************************************************************
 	
+	public void setGameInfo(String new_info) {
+		String info = new_info.substring(4);
+		game_config = info;
+		System.out.println(info);
+		
+		houses = Integer.parseInt(info);
+		info = info.substring(2);
+		System.out.println(info);
+		
+		seeds = Integer.parseInt(info);
+		info = info.substring(2);
+		System.out.println(info);
+		
+		Long.parseLong(info);
+		while (Character.isDigit(info.charAt(0)) == true) {
+			info = info.substring(1);
+		}
+		info = info.substring(1);
+		System.out.println(info);
+		char c = info.charAt(0);
+		switch (c) {
+			case 'F':
+				turn = 1;
+				break;
+			case 'S':
+				turn = 2;
+				break;
+			default:
+				turn = 1;
+		}
+		info = info.substring(1);
+		c = info.charAt(0);
+		set_rand = c;
+		switch (c) {
+			case 'S':
+				random = new int[0];
+				break;
+			case 'R':
+				info = info.substring(1);
+				random = new int[houses];
+				for (int i = 0; i < houses; i++) {
+					random[i] = info.charAt(0);
+					info = info.substring(1);
+				}
+				break;
+			default:
+				random = new int[0];
+		}
+	}
+	
+	public void newGame(int house, int seed, long time, char turn_num, char set_rand, int[] random, char AI_type) {
+		//read # houses per side
+		houses = house;
+
+		//read # seeds
+		seeds = seed;
+
+		//if next is digit, read timer value
+		if (time != 0)
+		{
+			timer = time;
+		}
+
+		//read if client goes first or second
+		turn = turn_num;
+		
+		//read if static # of seeds or random
+		if (set_rand == 'R') {
+			int[] seeds = new int[houses];
+			for(int i = 0; i > houses; i++) {
+					seeds[i] = random[i];	
+			}
+			board = new Board(houses, seeds);
+		}
+		else {
+			board = new Board(houses, seeds);
+		}
+
+		player_1 = new AI(AI_type);
+		player_2 = new AI(AI_type);
+	}
 	
 	
 	
@@ -256,51 +260,108 @@ public void AIClient(AI new_AI) {
 		}
 	}
 	*/
-	public Player startGame(GameManager gm, PrintStream p_stream) {
-		while(!gm.game_over) {
-			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
-				gm.game_over = true;
+	public Player startGame(PrintStream p_stream, AI ai, AI ai2) {
+		boolean game_over = false;
+		int score1 = 0;
+		int score2 = 0;
+		boolean player1_turn;
+		if (turn == 'F') {
+			player1_turn = true;
+		}
+		else {
+			player1_turn = false;
+		}
+		String move;
+		
+		while(!game_over) {
+			if ((score1 + score2) == (seeds*houses)) {
+				game_over = true;
 				break;
 			}
 			else {
-				if (gm.player_1.turn) {
-					if (gm.player_1.isAI()) {
-						//AI_turn(gm.player_1, gm, p_stream);
-					}
-					else {
-						//Player_turn(gm.player_1, gm, p_stream);
-					}
-					gm.player_1.setTurn(false);
-					gm.player_2.setTurn(true);
+				if (player1_turn) {
+					//move = s.getSocketScan().nextLine();
+					player1_turn = false;
 				}
 				else {
-					if (gm.player_2.isAI()) {
-						//AI_turn(gm.player_2, gm, p_stream);
-					}
-					else {
-						//Player_turn(gm.player_2, gm, p_stream);
-					}
-					gm.player_1.setTurn(true);
-					gm.player_2.setTurn(false);
+					//move = s.getSocketScan().nextLine();
+					player1_turn = true;
 				}
 			}
 		}
-		return gm.whoWon();
+		if (score1 > score2) {
+			return ai;
+		}
+		else if (score2 > score1) {
+			return ai2;
+		}
+		else {
+			Player tie = new Player("tie");
+			return tie;
+		}
 	}
 	
 	public static void main(String args[]) throws IOException {
 		try {
-			Server s = new Server();
+			AIServer s = new AIServer();
+			System.out.println("Server started");
+			//AIClient c = new AIClient();
+			//AIClient c2 = new AIClient();
+			System.out.println("AI Clients started");
 			while (!s.getStopped()) {
 				while (s.getSocket().isConnected()) {
+					System.out.println("Connected");
 					PrintStream p_stream = new PrintStream(s.getSocket().getOutputStream());
 					s.setMessage(wel);
 					p_stream.println(s.getMessage());
-					s.setMessage("INFO" + s.game_config);
+					System.out.println("Welcomed");
+					s.setMessage("INFO" + s.getGameConfig());
 					p_stream.println(s.getMessage());
+					System.out.println("Informed");
 					if (s.getSocketScan().nextLine() == red) {
-						GameManager game_manager = new GameManager();
-						s.startGame(game_manager, p_stream);	
+						s.setMessage(beg);
+						p_stream.println(s.getMessage());
+						System.out.println("Begin");
+						//GameManager game_manager = new GameManager(s.houses, s.seeds, s.timer, s.turn_num, s.set_rand, s.random, 'm');
+						boolean game_over = false;
+						int score1 = 0;
+						int score2 = 0;
+						boolean player1_turn;
+						if (s.turn == 'F') {
+							player1_turn = true;
+						}
+						else {
+							player1_turn = false;
+						}
+						String move;
+						
+						while(!game_over) {
+							if ((score1 + score2) == (s.seeds*s.houses)) {
+								game_over = true;
+								break;
+							}
+							else {
+								if (player1_turn) {
+									move = s.getSocketScan().nextLine();
+									System.out.println("AI 1 turn");
+									player1_turn = false;
+								}
+								else {
+									move = s.getSocketScan().nextLine();
+									System.out.println("AI 2 turn");
+									player1_turn = true;
+								}
+							}
+						}
+						if (score1 > score2) {
+							System.out.println("AI_1 won!");
+						}
+						else if (score2 > score1) {
+							System.out.println("AI_2 won!");
+						}
+						else {
+							System.out.println("It's a tie!");
+						}	
 					}
 					if (s.getSocketScan().hasNext()) {
 						if (s.getSocketScan().nextLine() == again) {

@@ -18,7 +18,7 @@ public class GameManager {
 	int seeds_per;
 	private int scoreP1;
 	private int scoreP2;
-	int timer_val;
+	long timer_val;
 	int timer;
 	char player_choice = 'z';
 	String player_name = "player";
@@ -29,6 +29,11 @@ public class GameManager {
 	public GameManager() {
 		newGame();
 		gui = new KalahGUI();
+	}
+	
+	public GameManager(int house, int seed, long time, char turn_num, char set_rand, int[] random, char AI_type) {
+		newGame(house, seed, time, turn_num, set_rand, random, AI_type);
+		//gui = new KalahGUI();
 	}
 
 	public void makeMove(int location) {
@@ -160,7 +165,7 @@ public class GameManager {
 		in.close();
 	}
 	
-	public void newGame(int house, int seed, int time, char turn_num, char set_rand, int[] random) {
+	public void newGame(int house, int seed, long time, char turn_num, char set_rand, int[] random, char AI_type) {
 		//read # houses per side
 		houses = house;
 
@@ -194,12 +199,12 @@ public class GameManager {
 
 		//create and set players
 		if (player_choice == 'F') {
-			player_1 = new Player(player_name);
-			player_2 = new Player("computer");
+			player_1 = new AI(AI_type);
+			player_2 = new AI(AI_type);
 		}
 		else {
-			player_1 = new Player("computer");
-			player_2 = new Player(player_name);
+			player_1 = new AI(AI_type);
+			player_2 = new AI(AI_type);
 		}
 		
 		player_1.setTurn(true);

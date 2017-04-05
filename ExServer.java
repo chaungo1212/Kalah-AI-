@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 
-public class ChatServer {
+public class ExServer {
 
     private static final int PORT = 9001;
 

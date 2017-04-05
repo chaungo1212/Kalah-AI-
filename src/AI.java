@@ -25,8 +25,8 @@ public class AI extends Player{
 		type = c;
 	}
 	
-	public int runWhat(char c) {
-		int move = 0;
+	public String runWhat(char c) {
+		String move = "0 0";
 		switch(c)
 		{
 			case 'E':
@@ -44,10 +44,10 @@ public class AI extends Player{
 		return move;
 	}
 	
-	public int runE() {
+	public String runE() {
 		//pick randomly from valid moves
 		//Random rand = new Random();
-		int move = 0;
+		String move = "0 0";
 		//int max = 13;
 		//pick randomly from valid moves
 		//while (!isValidMove(move)) {
@@ -56,14 +56,16 @@ public class AI extends Player{
 		return move;
 	}
 	
-	public int runM() {
+	public String runM() {
+		String move = "0 0";
 		//use min-max tree to look ahead
-		return 0;
+		return move;
 	}
 
-	public int runH() {
+	public String runH() {
+		String move = "0 0";
 		//use min-max tree to look ahead
-		return 0;
+		return move;
 	}
 
 
