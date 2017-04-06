@@ -35,6 +35,11 @@ public class GameManager {
 		newGame(house, seed, time, turn_num, set_rand, random, AI_type);
 		//gui = new KalahGUI();
 	}
+	
+	public GameManager(int house, int seed, long time, char turn_num, char AI_type) {
+		newGame(house, seed, time, turn_num, AI_type);
+		//gui = new KalahGUI();
+	}
 
 	public void makeMove(int location) {
 		System.out.print("Updating Game\n");
@@ -113,6 +118,10 @@ public class GameManager {
 
 	public void setP2Score(int score) {
 		this.scoreP2 = score;
+	}
+	
+	public Board getBoard() {
+		return board;
 	}
 
 	public void newGame() {
@@ -197,6 +206,37 @@ public class GameManager {
 		//System.out.println("Username: ");
 		//player_name = reader.next();
 
+		//create and set players
+		if (player_choice == 'F') {
+			player_1 = new AI(AI_type);
+			player_2 = new AI(AI_type);
+		}
+		else {
+			player_1 = new AI(AI_type);
+			player_2 = new AI(AI_type);
+		}
+		
+		player_1.setTurn(true);
+	}
+	
+	public void newGame(int house, int seed, long time, char turn_num, char AI_type) {
+		//read # houses per side
+		houses = house;
+
+		//read # seeds
+		seeds_per = seed;
+
+		//if next is digit, read timer value
+		if (time != 0)
+		{
+			timer_val = time;
+		}
+
+		//read if client goes first or second
+		player_choice = turn_num;
+		
+		board = new Board(houses, seeds_per);
+		
 		//create and set players
 		if (player_choice == 'F') {
 			player_1 = new AI(AI_type);
