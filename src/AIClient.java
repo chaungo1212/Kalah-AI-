@@ -53,26 +53,26 @@ public class AIClient {
 	}
 	
 	public void setGameInfo(String new_info) {
-		System.out.println(new_info);
+		//System.out.println(new_info);
 		game_info = new_info;
 		String info = new_info.substring(4);
-		System.out.println(info);
+		//System.out.println(info);
 		//houses
 		//Integer.parseInt(info);
 		info = info.substring(2);
-		System.out.println(info);
+		//System.out.println(info);
 		//seeds
 		//Integer.parseInt(info);
 		info = info.substring(2);
-		System.out.println(info);
+		//System.out.println(info);
 		//time
 		//Long.parseLong(info);
 		while (Character.isDigit(info.charAt(0)) == true) {
 			info = info.substring(1);
-			System.out.println(info);
+			//System.out.println(info);
 		}
 		info = info.substring(1);
-		System.out.println(info);
+		//System.out.println(info);
 		char c = info.charAt(0);
 		switch (c) {
 			case 'F':
@@ -120,9 +120,7 @@ public class AIClient {
 				 * Main Game Loop
 				 ****************************************************/
 				String wel = c.client_scanner.nextLine(); //gets welcome
-				System.out.println(wel);
 				String gamein = c.client_scanner.nextLine();
-				System.out.println(gamein);
 				c.setGameInfo(gamein); //gets game_info
 				
 				c.setMessage(red);	//sends READY
@@ -137,7 +135,7 @@ public class AIClient {
 				while (c.client_scanner.hasNextLine()) {		
 					String input = c.client_scanner.nextLine();
 					
-					while (input != "WINNER" || input != "LOSER") {
+					while (input != "WINNER" || input != "LOSER" || input != "TIME" || input != "ILLEGAL") {
 						if(c.turn%2 == c.client_turn) {
 							ai_move = c.this_AI.runWhat(c.this_AI.getType());
 							c.setMessage(ai_move);	//sends move

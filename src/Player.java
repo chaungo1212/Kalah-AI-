@@ -9,6 +9,21 @@ public class Player {
 	private int score;
 	boolean turn = false;
 	private boolean AI;
+	
+	// Constructors
+	public Player(String player_name) {
+		this.username=player_name;
+		if (player_name.equals("computer")) {
+			AI=true;
+		}
+	}
+	
+	public Player(Player play) {
+		username = play.getUsername();
+		score = play.getScore();
+		turn = play.getTurn();
+		AI = play.isAI();
+	}
 
 	public String getUsername() {
 		return username;
@@ -54,12 +69,4 @@ public class Player {
 			return false;
 		}
 	}*/
-
-	// Constructor
-	public Player(String player_name) {
-		this.username=player_name;
-		if (player_name.equals("computer")) {
-			AI=true;
-		}
-	}
 }

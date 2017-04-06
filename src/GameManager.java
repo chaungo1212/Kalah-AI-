@@ -20,6 +20,7 @@ public class GameManager {
 	private int scoreP2;
 	long timer_val;
 	int timer;
+	int turn_num;
 	char player_choice = 'z';
 	String player_name = "player";
 	String file_name = "test.txt";
@@ -170,6 +171,7 @@ public class GameManager {
 			player_2 = new Player(player_name);
 		}
 		
+		turn_num = 0;
 		player_1.setTurn(true);
 		in.close();
 	}
@@ -216,6 +218,7 @@ public class GameManager {
 			player_2 = new AI(AI_type);
 		}
 		
+		turn_num = 0;
 		player_1.setTurn(true);
 	}
 	
@@ -247,6 +250,7 @@ public class GameManager {
 			player_2 = new AI(AI_type);
 		}
 		
+		turn_num = 0;
 		player_1.setTurn(true);
 	}
 	

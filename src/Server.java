@@ -257,31 +257,47 @@ public void AIClient(AI new_AI) {
 	}
 	*/
 	public Player startGame(GameManager gm, PrintStream p_stream) {
+		String move;
+		int t = 0;
 		while(!gm.game_over) {
 			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
 				gm.game_over = true;
 				break;
 			}
 			else {
-				if (gm.player_1.turn) {
-					if (gm.player_1.isAI()) {
-						//AI_turn(gm.player_1, gm, p_stream);
+				while (gm.player_1.getTurn() == true) {
+					move = this.getSocketScan().nextLine();
+					t = gm.board.sowSeeds(Integer.parseInt(move));
+					if (t == 1) {
+						gm.player_2.setTurn(true);
+						gm.player_1.setTurn(false);
 					}
 					else {
-						//Player_turn(gm.player_1, gm, p_stream);
+						gm.player_2.setTurn(false);
+						gm.player_1.setTurn(true);
 					}
-					gm.player_1.setTurn(false);
-					gm.player_2.setTurn(true);
 				}
-				else {
-					if (gm.player_2.isAI()) {
-						//AI_turn(gm.player_2, gm, p_stream);
+				while (gm.player_2.getTurn() == true) {
+					move = this.getSocketScan().nextLine();
+					if (gm.turn_num == 1 && move == "P") {
+						gm.getBoard().flipBoard();
+						//swap players
+						Player temp;
+						temp = gm.player_1;
+						gm.player_1 = gm.player_2;
+						gm.player_2 = temp;
 					}
 					else {
-						//Player_turn(gm.player_2, gm, p_stream);
+						t = gm.board.sowSeeds(Integer.parseInt(move));
 					}
-					gm.player_1.setTurn(true);
-					gm.player_2.setTurn(false);
+					if (t == 1) {
+						gm.player_2.setTurn(true);
+						gm.player_1.setTurn(false);
+					}
+					else {
+						gm.player_2.setTurn(false);
+						gm.player_1.setTurn(true);
+					}
 				}
 			}
 		}

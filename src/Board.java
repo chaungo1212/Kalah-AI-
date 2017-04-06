@@ -200,4 +200,16 @@ public class Board {
 		}
 		return false;
 	}
+	
+	public void flipBoard() {
+		int temp;
+		int j = seeds.length-1;
+		for (int i = 0; i < ((seeds.length-1)/2)+1; i++) {
+				temp = seeds[i];
+				seeds[i] = seeds[j];
+				seeds[j] = temp;
+				j--;
+		}
+	}
+	
 }

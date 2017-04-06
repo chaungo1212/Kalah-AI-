@@ -27,6 +27,7 @@ public class AIServer {
 	private int[] random;
 	String player_name = "player";
 	String file_name = "test.txt";
+	private int turn_num = 0;
 	
 	private static final String wel = "WELCOME";
 	private static final String red = "READY";
@@ -179,7 +180,7 @@ public class AIServer {
 		}
 	}
 	
-	public void newGame(int house, int seed, long time, char turn_num, char set_rand, int[] random, char AI_type) {
+	public void newGame(int house, int seed, long time, char turns, char set_rand, int[] random, char AI_type) {
 		//read # houses per side
 		houses = house;
 
@@ -193,7 +194,7 @@ public class AIServer {
 		}
 
 		//read if client goes first or second
-		turn = turn_num;
+		turn = turns;
 		
 		//read if static # of seeds or random
 		if (set_rand == 'R') {
@@ -272,7 +273,7 @@ public class AIServer {
 			player1_turn = false;
 		}
 		String move;
-		int t;
+		int t = 0;
 		
 		while(!game_over) {
 			if ((score1 + score2) == (seeds*houses)) {
@@ -297,7 +298,17 @@ public class AIServer {
 				else {
 					while (player_2.turn == true) {
 						move = this.getSocketScan().nextLine();
-						t = board.sowSeeds(Integer.parseInt(move));
+						if (turn_num == 1 && move == "P") {
+							board.flipBoard();
+							//swap players
+							Player temp;
+							temp = player_1;
+							player_1 = player_2;
+							player_2 = temp;
+						}
+						else {
+							t = board.sowSeeds(Integer.parseInt(move));
+						}
 						if (t == 1) {
 							player_2.setTurn(true);
 							player_1.setTurn(false);
@@ -325,24 +336,21 @@ public class AIServer {
 	public static void main(String args[]) throws IOException {
 		try {
 			AIServer s = new AIServer();
-			System.out.println("Server started");
-			//AIClient c = new AIClient();
-			//AIClient c2 = new AIClient();
-			System.out.println("AI Clients started");
+			//System.out.println("Server started");
 			while (!s.getStopped()) {
 				while (s.getSocket().isConnected()) {
-					System.out.println("Connected");
+					//System.out.println("Connected");
 					PrintStream p_stream = new PrintStream(s.getSocket().getOutputStream());
 					s.setMessage(wel);
 					p_stream.println(s.getMessage());
-					System.out.println("Welcomed");
+					//System.out.println("Welcomed");
 					s.setMessage("INFO" + s.getGameConfig());
 					p_stream.println(s.getMessage());
-					System.out.println("Informed");
+					//System.out.println("Informed");
+					//System.out.println(s.getSocketScan().nextLine());
 					if (s.getSocketScan().nextLine() == red) {
 						s.setMessage(beg);
 						p_stream.println(s.getMessage());
-						System.out.println("Begin");
 						//GameManager game_manager = new GameManager(s.houses, s.seeds, s.timer, s.turn_num, s.set_rand, s.random, 'm');
 						boolean game_over = false;
 						int score1 = 0;
@@ -364,12 +372,10 @@ public class AIServer {
 							else {
 								if (player1_turn) {
 									move = s.getSocketScan().nextLine();
-									System.out.println("AI 1 turn");
 									player1_turn = false;
 								}
 								else {
 									move = s.getSocketScan().nextLine();
-									System.out.println("AI 2 turn");
 									player1_turn = true;
 								}
 							}
@@ -384,14 +390,14 @@ public class AIServer {
 							System.out.println("It's a tie!");
 						}	
 					}
-					if (s.getSocketScan().hasNext()) {
+					/*if (s.getSocketScan().hasNext()) {
 						if (s.getSocketScan().nextLine() == again) {
 							s.setStopped(false);
 						}
 					}
 					else {
 						s.setStopped(true);
-					}
+					}*/
 				}
 			}
 		}

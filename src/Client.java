@@ -102,7 +102,7 @@ public class Client {
 						//p_stream.println(getMessage());
 					
 				
-				System.out.println("Play Again? : (y/n)");
+				/*System.out.println("Play Again? : (y/n)");
 				if (scanner.nextLine().charAt(0) == 'n') {
 					scanner.close();
 					quit = true;
@@ -111,7 +111,7 @@ public class Client {
 					quit = false;
 					c.setMessage(again);	//sends AGAIN
 					p_stream.println(c.getMessage());
-				}
+				}*/
 			}
 			
 			scanner.close();

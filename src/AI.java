@@ -17,12 +17,22 @@ public class AI extends Player{
 		memory = new Vector<Integer>();
 	}
 	
+	public AI(AI ai) {
+		super("computer");
+		type = ai.getType();
+		memory = ai.getMemory();
+	}
+	
 	public char getType () {
 		return type;
 	}
 	
 	public void setType (char c) {
 		type = c;
+	}
+	
+	public Vector<Integer> getMemory() {
+		return memory;
 	}
 	
 	public String runWhat(char c) {
