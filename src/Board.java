@@ -55,30 +55,27 @@ public class Board {
 		seeds = newSeeds;
 	}
 
-	
-	// ***************************************** Needs work!!!
-	public void sowSeeds(int house) {
+	public int sowSeeds(int house) {
 		int original = house;
 		int remaining = getNumSeeds(house);
 		
-		//make sure player can only put in their store
-		if(original > seeds.length/2)
-		{
-			if(house == 0)
-			{
-				house = (seeds.length/2)+1;
-			}
-
-		}
-		else
-		{
-			if(house == seeds.length-1)
-			{
-				house = (seeds.length/2);
-			}
-		}
-		
 		while (remaining != 0) {
+			//make sure player can only put in their store
+			if(original > seeds.length/2)
+			{
+				if(house == 0)
+				{
+					house = (seeds.length/2)+1;
+				}
+
+			}
+			else
+			{
+				if(house == seeds.length-1)
+				{
+					house = (seeds.length/2);
+				}
+			}
 			if (house == 0 || house == (seeds.length - 1)) {
 				if (house == 0) {
 					house = ((seeds.length / 2) + 1);
@@ -93,31 +90,33 @@ public class Board {
 				remaining--;
 			}
 		}
-		//if last seed in a store
-		if (house == 0 || house == (seeds.length - 1)) {
-			//***** increase # of turns
-		}
-		
 		// if last seed in empty house
 		if (seeds[house] == 1) {
 			// on player one's side
 			if ((original - 0) < (seeds.length - 1) - original) {
-				//if (!other side is empty)
-					
+				if (seeds[house - ((seeds.length - 1) / 2)] != 0) {
 					// capture all on both sides of the board for player 1
 					seeds[0] += seeds[house] + seeds[house + ((seeds.length - 1) / 2)];
-				//else
-					//don't capture
+				}
+				//else don't capture
 			}
 			// on player two's side
 			else if ((original - 0) > (seeds.length - 1) - original) {
-				//if (!other side is empty)
-				
+				if (seeds[house + ((seeds.length - 1) / 2)] != 0) {
 					// capture all on both sides of the board for player 2
 					seeds[(seeds.length - 1)] += seeds[house] + seeds[house - ((seeds.length - 1) / 2)];
-				//else
-					//don't capture
+				}
+				//else don't capture
 			}
+		}
+		//if last seed in a store
+		if (house == 0 || house == (seeds.length - 1)) {
+			//one more turn
+			return 1;
+		}
+		else {
+			//no more turns
+			return 0;
 		}
 	}
 

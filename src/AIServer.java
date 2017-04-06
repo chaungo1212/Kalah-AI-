@@ -272,6 +272,7 @@ public class AIServer {
 			player1_turn = false;
 		}
 		String move;
+		int t;
 		
 		while(!game_over) {
 			if ((score1 + score2) == (seeds*houses)) {
@@ -280,12 +281,32 @@ public class AIServer {
 			}
 			else {
 				if (player1_turn) {
-					//move = s.getSocketScan().nextLine();
-					player1_turn = false;
+					while (player_1.turn == true) {
+						move = this.getSocketScan().nextLine();
+						t = board.sowSeeds(Integer.parseInt(move));
+						if (t == 1) {
+							player_1.setTurn(true);
+							player_2.setTurn(false);
+						}
+						else {
+							player_1.setTurn(false);
+							player_2.setTurn(true);
+						}
+					}
 				}
 				else {
-					//move = s.getSocketScan().nextLine();
-					player1_turn = true;
+					while (player_2.turn == true) {
+						move = this.getSocketScan().nextLine();
+						t = board.sowSeeds(Integer.parseInt(move));
+						if (t == 1) {
+							player_2.setTurn(true);
+							player_1.setTurn(false);
+						}
+						else {
+							player_2.setTurn(false);
+							player_1.setTurn(true);
+						}
+					}
 				}
 			}
 		}

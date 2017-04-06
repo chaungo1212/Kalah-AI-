@@ -35,10 +35,16 @@ public class KalahSimple {
 						//location = minimax();
 						//run minimax to get move
 						//returns house number to move from
-						gm.getBoard().sowSeeds(location);
+						int t = gm.getBoard().sowSeeds(location);
+						if (t == 1) {
+							gm.player_1.setTurn(true);
+							gm.player_2.setTurn(false);
+						}
+						else {
+							gm.player_1.setTurn(false);
+							gm.player_2.setTurn(true);
+						}
 					}
-					gm.player_1.setTurn(false);
-					gm.player_2.setTurn(true);
 				}
 				else {
 					while (gm.player_2.getTurn()) {
