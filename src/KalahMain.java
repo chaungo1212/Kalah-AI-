@@ -12,21 +12,21 @@ import java.util.Scanner;
 public class KalahMain {
 	
 	public static Player startGame(GameManager gm) {
-		while(!gm.game_over) {
-			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
-				gm.game_over = true;
+		while(!gm.getGameOver()) {
+			if ((gm.getP1Score() + gm.getP2Score()) == (gm.getSeeds() * gm.getHouses())) {
+				gm.setGameOver();
 				break;
 			}
 			else {
-				if (gm.player_1.getTurn() == true) {
+				if (gm.getP1().getTurn() == true) {
 					//while (getMove()) {
 						//get move
 						//update server
 						//update board
 						//update GUI
 					//}
-					gm.player_1.setTurn(false);
-					gm.player_2.setTurn(true);
+					gm.getP1().setTurn(false);
+					gm.getP2().setTurn(true);
 				}
 				else {
 					//while (getMove()) {
@@ -35,8 +35,8 @@ public class KalahMain {
 						//update board
 						//update GUI
 					//}
-					gm.player_1.setTurn(true);
-					gm.player_2.setTurn(false);
+					gm.getP1().setTurn(true);
+					gm.getP2().setTurn(false);
 				}
 			}
 		}

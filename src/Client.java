@@ -72,9 +72,9 @@ public class Client {
 				 * Main Game Loop
 				 ****************************************************/
 				String wel = c.client_scanner.nextLine(); //gets Welcome
-				System.out.println(wel);
+				//System.out.println(wel);
 				String gamein = c.client_scanner.nextLine();
-				System.out.println(gamein);
+				//System.out.println(gamein);
 				c.setGameInfo(gamein); //gets game_info
 				
 				c.setMessage(red);	//sends READY

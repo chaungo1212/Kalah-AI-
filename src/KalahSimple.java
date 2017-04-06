@@ -23,38 +23,59 @@ public class KalahSimple {
 	private char turn = 'F';
 	
 	public static AI startGame(GameManager gm) {
-		while(!gm.game_over) {
-			if ((gm.getP1Score() + gm.getP2Score()) == (gm.seeds_per * gm.houses)) {
-				gm.game_over = true;
+		String move = "";
+		int t = 0;
+		while(!gm.getGameOver()) {
+			if ((gm.getP1Score() + gm.getP2Score()) == (gm.getSeeds() * gm.getHouses())) {
+				gm.setGameOver();
 				break;
 			}
 			else {
-				if (gm.player_1.getTurn() == true) {
-					while (gm.player_1.getTurn()) {
-						int location = 0;
-						//location = minimax();
+				if (gm.getP1().getTurn() == true) {
+					while (gm.getP1().getTurn() == true) {
+
+						// ************
+						//move = minimax();
 						//run minimax to get move
 						//returns house number to move from
-						int t = gm.getBoard().sowSeeds(location);
+						t = gm.getBoard().sowSeeds(Integer.parseInt(move));
 						if (t == 1) {
-							gm.player_1.setTurn(true);
-							gm.player_2.setTurn(false);
+							gm.getP2().setTurn(true);
+							gm.getP1().setTurn(false);
 						}
 						else {
-							gm.player_1.setTurn(false);
-							gm.player_2.setTurn(true);
+							gm.getP2().setTurn(false);
+							gm.getP1().setTurn(true);
 						}
 					}
 				}
 				else {
-					while (gm.player_2.getTurn()) {
-						int location = 0;
+					while (gm.getP2().getTurn()) {
+						
+						// ************
+						//move = minimax();
 						//run minimax to get move
 						//returns house number to move from
-						gm.getBoard().sowSeeds(location);
+						if (gm.getTurnNum() == 1 && move == "P") {
+							gm.getBoard().flipBoard();
+							//swap players
+							Player temp;
+							temp = gm.getP1();
+							gm.setP1(gm.getP2());
+							gm.setP1(temp);
+						}
+						else {
+							t = gm.getBoard().sowSeeds(Integer.parseInt(move));
+						}
+						if (t == 1) {
+							gm.getP2().setTurn(true);
+							gm.getP1().setTurn(false);
+						}
+						else {
+							gm.getP2().setTurn(false);
+							gm.getP1().setTurn(true);
+						}
 					}
-					gm.player_1.setTurn(true);
-					gm.player_2.setTurn(false);
 				}
 			}
 		}

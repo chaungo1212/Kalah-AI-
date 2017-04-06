@@ -4,24 +4,31 @@
 	Authors: 
 */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
-public class GameManager {
-	Board board;
-	Player player_1;
-	Player player_2;
-	KalahGUI gui;
-	boolean started = false;
-	boolean game_over = false;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
-	int houses;
-	int seeds_per;
+public class GameManager {
+	private Board board;
+	private Player player_1;
+	private Player player_2;
+	private KalahGUI gui;
+	private Timer timer;
+	private boolean started = false;
+	private boolean time_out = false;
+	private boolean game_over = false;
+
+	private int houses;
+	private int seeds_per;
 	private int scoreP1;
 	private int scoreP2;
-	long timer_val;
-	int timer;
-	int turn_num;
-	char player_choice = 'z';
+	private long timer_val;
+	private long remaining_time;
+	private int turn_num;
+	private char player_choice = 'z';
 	String player_name = "player";
 	String file_name = "test.txt";
 
@@ -74,21 +81,38 @@ public class GameManager {
 	}
 
 	public void startTimer() {
-		System.out.print("Starting timer\n");
-		timer = 0;
+		timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (remaining_time == 0) {
+					timer.stop();
+					setTimeOut();
+					//JOptionPane.showMessageDialog(null, "Out of time!");
+				} else {
+					remaining_time--;
+				}
+			}
+		});
+		timer.start();
 	}
-
-	public int checkTimer() {
-		return timer;
+	
+	public void endTimer() {
+		timer.stop();
 	}
-
-	public boolean timeIsOut() {
-		if (timer >= timer_val) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	
+	public boolean getTimeOut() {
+		return time_out;
+	}
+	
+	public void setTimeOut() {
+		time_out = true;
+	}
+	
+	public boolean getGameOver() {
+		return game_over;
+	}
+	
+	public void setGameOver() {
+		game_over = true;
 	}
 
 	public Player whoWon() {
@@ -123,6 +147,34 @@ public class GameManager {
 	
 	public Board getBoard() {
 		return board;
+	}
+	
+	public int getSeeds() {
+		return seeds_per;
+	}
+	
+	public int getHouses() {
+		return houses;
+	}
+	
+	public Player getP1() {
+		return player_1;
+	}
+	
+	public void setP1(Player player) {
+		player_1 = player;
+	}
+	
+	public Player getP2() {
+		return player_2;
+	}
+	
+	public void setP2(Player player) {
+		player_2 = player;
+	}
+	
+	public int getTurnNum() {
+		return turn_num;
 	}
 
 	public void newGame() {
@@ -187,6 +239,7 @@ public class GameManager {
 		if (time != 0)
 		{
 			timer_val = time;
+			remaining_time = timer_val;
 		}
 
 		//read if client goes first or second

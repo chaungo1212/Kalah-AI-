@@ -40,6 +40,7 @@ public class KalahGUI extends JFrame {
 	private JTextField textFieldSeeds;
 	private String houses_per;
 	private String seeds_per;
+	private Game game;
 	private static final String default_house = "6";
 	private static final String default_seeds = "4";
 	private JTextField textFieldHouse;
@@ -169,7 +170,7 @@ public class KalahGUI extends JFrame {
 					else {
 						//go to the game frame
 						dispose();
-						Game game = new Game(houses_per, seeds_per);
+						game = new Game(houses_per, seeds_per);
 						game.setVisible(true);
 					}
 				}

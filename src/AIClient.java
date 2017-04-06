@@ -135,7 +135,7 @@ public class AIClient {
 				while (c.client_scanner.hasNextLine()) {		
 					String input = c.client_scanner.nextLine();
 					
-					while (input != "WINNER" || input != "LOSER" || input != "TIME" || input != "ILLEGAL") {
+					while (input != "WINNER" || input != "LOSER" || input != "TIME" || input != "ILLEGAL" || input != "TIE") {
 						if(c.turn%2 == c.client_turn) {
 							ai_move = c.this_AI.runWhat(c.this_AI.getType());
 							c.setMessage(ai_move);	//sends move
