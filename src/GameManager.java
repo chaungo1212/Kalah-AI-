@@ -81,6 +81,7 @@ public class GameManager {
 	}
 
 	public void startTimer() {
+		remaining_time = timer_val;
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (remaining_time == 0) {

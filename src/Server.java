@@ -256,28 +256,51 @@ public void AIClient(AI new_AI) {
 		}
 	}
 	*/
-	public Player startGame(GameManager gm, PrintStream p_stream) {
+
+	public void updateAll(GameManager gm, Socket client) {
+		//client.setBoard(gm.getBoard());
+	}
+
+	public Player startGame(GameManager gm, PrintStream p_stream, Socket client) {
 		String move;
 		int t = 0;
+		int loc = 0;
 		while(!gm.getGameOver()) {
 			if ((gm.getP1Score() + gm.getP2Score()) == (gm.getSeeds() * gm.getHouses())) {
 				gm.setGameOver();
 				break;
 			}
 			else {
+				//determine whether client or server is player 1
+				//do client/server or server/client turn based system
 				while (gm.getP1().getTurn() == true) {
-					//start timer
+					gm.startTimer();
 					move = this.getSocketScan().nextLine();
-					//end timer
+					gm.endTimer();
+					
+					loc = Integer.parseInt(move);
 					if (gm.getTimeOut() == true) {
 						setMessage(time);
 						p_stream.println(getMessage());
 						setMessage(loss);
 						p_stream.println(getMessage());
 						gm.setGameOver();
+						gm.getP1().setTurn(false);
+						gm.getP2().setTurn(false);
+					}
+					else if (gm.isValidMove(loc) == false) {
+						setMessage(ill);
+						p_stream.println(getMessage());
+						setMessage(loss);
+						p_stream.println(getMessage());
+						gm.setGameOver();
+						gm.getP1().setTurn(false);
+						gm.getP2().setTurn(false);
 					}
 					else {
-						t = gm.getBoard().sowSeeds(Integer.parseInt(move));
+						t = gm.getBoard().sowSeeds(loc);
+						updateAll(gm, client);
+						
 						if (t == 1) {
 							gm.getP2().setTurn(true);
 							gm.getP1().setTurn(false);
@@ -289,19 +312,33 @@ public void AIClient(AI new_AI) {
 					}
 				}
 				while (gm.getP2().getTurn() == true) {
-					//start timer
+					gm.startTimer();
 					move = this.getSocketScan().nextLine();
-					//end timer
+					gm.endTimer();
+					
+					loc = Integer.parseInt(move);
 					if (gm.getTimeOut() == true) {
 						setMessage(time);
 						p_stream.println(getMessage());
 						setMessage(loss);
 						p_stream.println(getMessage());
 						gm.setGameOver();
+						gm.getP1().setTurn(false);
+						gm.getP2().setTurn(false);
+					}
+					else if (gm.isValidMove(loc) == false) {
+						setMessage(ill);
+						p_stream.println(getMessage());
+						setMessage(loss);
+						p_stream.println(getMessage());
+						gm.setGameOver();
+						gm.getP1().setTurn(false);
+						gm.getP2().setTurn(false);
 					}
 					else {
 						if (gm.getTurnNum() == 1 && move == "P") {
 							gm.getBoard().flipBoard();
+							updateAll(gm, client);
 							//swap players
 							Player temp;
 							temp = gm.getP1();
@@ -309,15 +346,17 @@ public void AIClient(AI new_AI) {
 							gm.setP1(temp);
 						}
 						else {
-							t = gm.getBoard().sowSeeds(Integer.parseInt(move));
-						}
-						if (t == 1) {
-							gm.getP2().setTurn(true);
-							gm.getP1().setTurn(false);
-						}
-						else {
-							gm.getP2().setTurn(false);
-							gm.getP1().setTurn(true);
+							t = gm.getBoard().sowSeeds(loc);
+							updateAll(gm, client);
+							
+							if (t == 1) {
+								gm.getP2().setTurn(true);
+								gm.getP1().setTurn(false);
+							}
+							else {
+								gm.getP2().setTurn(false);
+								gm.getP1().setTurn(true);
+							}
 						}
 					}
 				}
@@ -338,7 +377,7 @@ public void AIClient(AI new_AI) {
 					p_stream.println(s.getMessage());
 					if (s.getSocketScan().nextLine() == red) {
 						GameManager game_manager = new GameManager();
-						s.startGame(game_manager, p_stream);	
+						s.startGame(game_manager, p_stream, s.getSocket());	
 					}
 					if (s.getSocketScan().hasNext()) {
 						if (s.getSocketScan().nextLine() == again) {

@@ -12,6 +12,7 @@ public class Client {
 	Scanner client_scanner;
 	String game_info;
 	String player_move;
+	private Board board;
 	
 	private static final String red = "READY";
 	private static final String ok = "OK";
@@ -36,6 +37,14 @@ public class Client {
 	
 	public void setGameInfo(String new_info) {
 		game_info = new_info;
+	}
+	
+	public Board getBoard() {
+		return board;
+	}
+	
+	public void setBoard(Board new_board) {
+		board = new_board;
 	}
 	
 	public void close() {

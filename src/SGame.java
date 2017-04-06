@@ -34,7 +34,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.SystemColor;
 
-public class Game extends JFrame {
+public class SGame extends JFrame {
 	private Vector<JButton> buttons_south = new Vector<JButton>();//store all the buttons in the north
 	private Vector<JButton> buttons_north = new Vector<JButton>();//store all the buttons in the south
 	static Board board;
@@ -70,10 +70,10 @@ public class Game extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Game(String houses_per, String seeds_per) {
+	public SGame(String houses_per, String seeds_per) {
 		nhouse_per = Integer.parseInt(houses_per);
 		nseed_per = Integer.parseInt(seeds_per);
-		board = new Board(nhouse_per * 2 + 2, nseed_per);
+		board = new Board(nhouse_per, nseed_per);
 		setTitle("Kalah Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 631, 300);
@@ -248,6 +248,14 @@ public class Game extends JFrame {
 						searchingQ.add(top);
 					}
 				}
+				
+				//**************
+				// somewhere here we can just call the move on our board
+				// send the move to the server
+				// get move from server
+				// update our board
+				//**************
+				
 				// Send seed to the following house from top of queue
 				for (int i = 0; i < seed_amount; i++) {
 					JButton top = (JButton) searchingQ.peek();
