@@ -52,6 +52,7 @@ public class Game extends JFrame {
 	private JFrame frame;
 	private JLabel time_label;
 	private boolean finished;
+	private GameManager judge;
 
 	/**
 	 * sLaunch the application.
@@ -203,7 +204,7 @@ public class Game extends JFrame {
 
 		}
 		// Timer setting allow 10 seconds for user to input
-		remaining_time = 50;
+		remaining_time = 10;
 		time_label.setText(Integer.toString(remaining_time));
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -219,14 +220,12 @@ public class Game extends JFrame {
 		timer.start();
 	}
 
-	
-
 	private class ButtonsListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(finished == false){
 				// Refresh remaining_time
-				remaining_time = 50;
+				remaining_time = 10;
 				timer.stop();
 				time_label.setText(Integer.toString(remaining_time));
 				timer.start();
@@ -341,37 +340,19 @@ public class Game extends JFrame {
 							}
 						}
 					}
-					/* Check either north side or south side has all "0"
-					 * Then game stops and sends one side's all seed to either store 1
-					 * and store 2.
+					/* Use GameManager to check either store1 or store2 wint
 					 */
-					boolean win_store1 = true;
-					int nseeds_all_south = 0;
-					//north side check all houses if it is equal to 0
-					for (int i = 0; i < buttons_south.size(); i++) {
-						if (Integer.parseInt(buttons_south.elementAt(i).getText()) != 0) {
-							win_store1 = false;
-						}
-						nseeds_all_south = nseeds_all_south + Integer.parseInt(buttons_south.elementAt(i).getText());
-					}
-					boolean win_store2 = true;
-					int nseeds_all_north = 0;
-					//north side check all houses if it is equal to 0
-					for (int i = 0; i < buttons_north.size(); i++) {
-						if (Integer.parseInt(buttons_north.elementAt(i).getText()) != 0) {
-							win_store2 = false;
-						}
-						nseeds_all_north = nseeds_all_north + Integer.parseInt(buttons_north.elementAt(i).getText());
-					}
+					judge = new GameManager();
+					judge.checkwin(buttons_south, buttons_north, store1, store2);
 					int nseed_store1 = Integer.parseInt(store1.getText().substring(8, store1.getText().length() - 1));
 					int nseed_store2 = Integer.parseInt(store2.getText().substring(8, store2.getText().length() - 1));
-					if (win_store1) {//seed in store 1
-						nseed_store1 = nseed_store1 + nseeds_all_north;
+					if (judge.win_store1) {//seed in store 1
+						nseed_store1 = nseed_store1 + judge.nseeds_all_north;
 					}
-					if (win_store2) {//seed in store 2
-						nseed_store2 = nseed_store2 + nseeds_all_south;
+					if (judge.win_store2) {//seed in store 2
+						nseed_store2 = nseed_store2 + judge.nseeds_all_south;
 					}
-					if (win_store1 || win_store2) {
+					if (judge.win_store1 || judge.win_store2) {
 						timer.stop();
 						for (int i = 0; i < buttons_south.size(); i++) {
 							buttons_south.elementAt(i).setText("0");
@@ -393,7 +374,7 @@ public class Game extends JFrame {
 					}
 					
 					// AI working part
-					if(win_store1 == false && win_store2 == false){
+					if(judge.win_store1 == false && judge.win_store2 == false){
 						Board currentboard = new Board(nhouse_per, nseed_per);
 						for(int i = 0; i < buttons_north.size(); i++)
 							currentboard.north_house.get(i).nseed = Integer.parseInt(buttons_north.get(i).getText()); 
@@ -421,37 +402,19 @@ public class Game extends JFrame {
 						store1.setText("Store 1(" + Integer.toString(nextboard.store1.nseed) + ")");
 						store2.setText("Store 2(" + Integer.toString(nextboard.store2.nseed) + ")");
 						
-						/* Check either north side or south side has all "0"
-						 * Then game stops and sends one side's all seed to either store 1
-						 * and store 2.
+						/* Use GameManager to check either store1 or store2 wint
 						 */
-						win_store1 = true;
-						nseeds_all_south = 0;
-						//north side check all houses if it is equal to 0
-						for (int i = 0; i < buttons_south.size(); i++) {
-							if (Integer.parseInt(buttons_south.elementAt(i).getText()) != 0) {
-								win_store1 = false;
-							}
-							nseeds_all_south = nseeds_all_south + Integer.parseInt(buttons_south.elementAt(i).getText());
-						}
-						win_store2 = true;
-						nseeds_all_north = 0;
-						//north side check all houses if it is equal to 0
-						for (int i = 0; i < buttons_north.size(); i++) {
-							if (Integer.parseInt(buttons_north.elementAt(i).getText()) != 0) {
-								win_store2 = false;
-							}
-							nseeds_all_north = nseeds_all_north + Integer.parseInt(buttons_north.elementAt(i).getText());
-						}
+						judge = new GameManager();
+						judge.checkwin(buttons_south, buttons_north, store1, store2);
 						nseed_store1 = Integer.parseInt(store1.getText().substring(8, store1.getText().length() - 1));
 						nseed_store2 = Integer.parseInt(store2.getText().substring(8, store2.getText().length() - 1));
-						if (win_store1) {//seed in store 1
-							nseed_store1 = nseed_store1 + nseeds_all_north;
+						if (judge.win_store1) {//seed in store 1
+							nseed_store1 = nseed_store1 + judge.nseeds_all_north;
 						}
-						if (win_store2) {//seed in store 2
-							nseed_store2 = nseed_store2 + nseeds_all_south;
+						if (judge.win_store2) {//seed in store 2
+							nseed_store2 = nseed_store2 + judge.nseeds_all_south;
 						}
-						if (win_store1 || win_store2) {
+						if (judge.win_store1 || judge.win_store2) {
 							timer.stop();
 							for (int i = 0; i < buttons_south.size(); i++) {
 								buttons_south.elementAt(i).setText("0");
@@ -473,7 +436,8 @@ public class Game extends JFrame {
 						}
 					}
 				}
-			}	
+			}
+			
 		}
 	}
 }
