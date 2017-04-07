@@ -217,8 +217,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
-
-
 public class Board {
 	public Vector<House> north_house; // AI houses
 	public Vector<House> south_house; // players' houses
@@ -226,13 +224,13 @@ public class Board {
 	public House store2; // player
 	public int next_board_index; // index in maxmintree
 	public boolean free_turn; // in searching
-	public float score; // for maxminsearching tree to choose
+	public float score; // for maxmin searching tree to choose
 	public Board parent;
-	
-	public Board(int nhouse_per, int nseed){
+
+	public Board(int nhouse_per, int nseed) {
 		north_house = new Vector<House>();
 		south_house = new Vector<House>();
-		for(int i = 0; i < nhouse_per; i++){
+		for (int i = 0; i < nhouse_per; i++) {
 			House north = new House(nseed);
 			House south = new House(nseed);
 			north.type = i;
@@ -248,192 +246,189 @@ public class Board {
 		parent = null;
 		score = 0;
 	}
-	
+
 	public Board(Board b) {
-		//seeds = b.getSeeds();
 		north_house = new Vector<House>();
 		south_house = new Vector<House>();
-		for(int i = 0; i < b.north_house.size(); i++){
-			House newnorth = new House(b.north_house.elementAt(i)); 
-			House newsouth = new House(b.south_house.elementAt(i)); 
+		for (int i = 0; i < b.north_house.size(); i++) {
+			House newnorth = new House(b.north_house.elementAt(i));
+			House newsouth = new House(b.south_house.elementAt(i));
 			newnorth.type = i;
 			newsouth.type = i;
 			north_house.add(newnorth);
 			south_house.add(newsouth);
 		}
-		store1 = new House(b.store1); 
+		store1 = new House(b.store1);
 		store1.type = -1;
 		store2 = new House(b.store2);
 		store2.type = -2;
 		score = b.score;
-		//next_board_index; 
 		free_turn = false; // This always initially set false. Only update when checking.
 		parent = null;
 		score = b.score;
 	}
-	public Board AImoveNorth(int index_house){
+
+	public Board AImoveNorth(int index_house) {
 		Board newboard = new Board(this);
 		newboard.parent = this;
 		int nseed = newboard.north_house.elementAt(index_house).nseed;
 		newboard.north_house.elementAt(index_house).nseed = 0;
 		Queue q = new LinkedList();
 		// Set Houses into q in counterclockwise.
-		for(int i = newboard.north_house.size() - 1; i >= 0; i--){
+		for (int i = newboard.north_house.size() - 1; i >= 0; i--) {
 			q.add(newboard.north_house.get(i));
 		}
 		q.add(newboard.store1);
-		for(int i = 0; i < newboard.south_house.size(); i++){
+		for (int i = 0; i < newboard.south_house.size(); i++) {
 			q.add(newboard.south_house.get(i));
 		}
 		q.add(newboard.store2);
 		// Make q start from the house which is going to add seed
 		int npop = newboard.north_house.size() - index_house;
-		for(int i = 0; i < npop; i ++){
-			House pop = (House)q.poll();
+		for (int i = 0; i < npop; i++) {
+			House pop = (House) q.poll();
 			q.add(pop);
 		}
 		// Then start to update the seed in the house
-		for(int i =0; i < nseed; i++){
-			House updated = (House)q.poll();
-			if((i == nseed-1) && (updated.type == -1)){ // The last seed go to store1 => get free turn
+		for (int i = 0; i < nseed; i++) {
+			House updated = (House) q.poll();
+			if ((i == nseed - 1) && (updated.type == -1)) { // The last seed go to store1 => get free turn
 				updated.nseed++;
 				newboard.free_turn = true;
 				newboard.score += 1;
-			}
-			else if((i == nseed-1) && updated.type > 0 && updated.nseed == 0 && newboard.south_house.get(updated.type).nseed != 0){
-				newboard.store1.nseed = newboard.store1.nseed + newboard.south_house.get(updated.type).nseed + 1; 
+			} else if ((i == nseed - 1) && updated.type > 0 && updated.nseed == 0
+					&& newboard.south_house.get(updated.type).nseed != 0) {
+				newboard.store1.nseed = newboard.store1.nseed + newboard.south_house.get(updated.type).nseed + 1;
 				updated.nseed = 0;
 				newboard.south_house.get(updated.type).nseed = 0;
-			}
-			else{ // normal case
+			} else { // normal case
 				updated.nseed++;
 			}
 			q.add(updated);
-			
+
 		}
-		// Check whether one side is all zeros or not.
-		// North all zero => south nseed go to store2
-		// South all zero => north nseed go to store1
-		// Check north
+		/*
+		 * Check whether one side is all zeros or not. North all zero => south
+		 * nseed go to store2 South all zero => north nseed go to store1 Check
+		 * north
+		 */
 		int allsouth = 0;
 		int allnorth = 0;
 		boolean allnorthzero = true;
 		boolean allsouthzero = true;
-		for(int i = 0; i < newboard.north_house.size(); i++){
-			if(newboard.north_house.get(i).nseed != 0){
+		for (int i = 0; i < newboard.north_house.size(); i++) {
+			if (newboard.north_house.get(i).nseed != 0) {
 				allnorthzero = false;
 			}
 			allsouth = allsouth + newboard.south_house.get(i).nseed;
 		}
-		for(int i = 0; i < newboard.south_house.size(); i++){
-			if(newboard.south_house.get(i).nseed != 0){
+		for (int i = 0; i < newboard.south_house.size(); i++) {
+			if (newboard.south_house.get(i).nseed != 0) {
 				allsouthzero = false;
 			}
 			allnorth = allnorth + newboard.north_house.get(i).nseed;
 		}
-		if(allnorthzero == true){
+		if (allnorthzero == true) {
 			newboard.store2.nseed += allsouth;
-			for(int i = 0; i < newboard.south_house.size();i++){
+			for (int i = 0; i < newboard.south_house.size(); i++) {
 				newboard.south_house.get(i).nseed = 0;
 			}
 		}
-		if(allsouthzero == true){
+		if (allsouthzero == true) {
 			newboard.store1.nseed += allnorth;
-			for(int i = 0; i < newboard.north_house.size();i++){
+			for (int i = 0; i < newboard.north_house.size(); i++) {
 				newboard.north_house.get(i).nseed = 0;
 			}
 		}
 		return newboard;
 	}
-	
-	public Board AImoveSouth(int index_house){
+
+	public Board AImoveSouth(int index_house) {
 		Board newboard = new Board(this); // child board
 		newboard.parent = this;
 		int nseed = newboard.south_house.elementAt(index_house).nseed;
 		newboard.south_house.elementAt(index_house).nseed = 0;
 		Queue q = new LinkedList();
 		// Set Houses into q in counterclockwise.
-		for(int i = 0; i < newboard.south_house.size(); i++){
+		for (int i = 0; i < newboard.south_house.size(); i++) {
 			q.add(newboard.south_house.get(i));
 		}
 		q.add(newboard.store2);
-		for(int i = newboard.north_house.size() - 1; i >= 0; i--){
+		for (int i = newboard.north_house.size() - 1; i >= 0; i--) {
 			q.add(newboard.north_house.get(i));
 		}
 		q.add(newboard.store1);
 		// Make q start from the house which is going to add seed
 		int npop = index_house + 1;
-		for(int i = 0; i < npop; i ++){
-			House pop = (House)q.poll();
+		for (int i = 0; i < npop; i++) {
+			House pop = (House) q.poll();
 			q.add(pop);
 		}
 		// Then start to update the seed in the house
-		for(int i =0; i < nseed; i++){
-			House updated = (House)q.poll();
-			if((i == nseed-1) && updated.type == -2){ // The last seed go to store2 => get free turn
+		for (int i = 0; i < nseed; i++) {
+			House updated = (House) q.poll();
+			if ((i == nseed - 1) && updated.type == -2) { // The last seed go to store2 => get free turn
 				updated.nseed++;
 				newboard.free_turn = true;
 				newboard.score += 1;
-			}
-			else if((i == nseed-1) && updated.type > 0 && updated.nseed == 0 && newboard.north_house.get(updated.type).nseed != 0){
-				newboard.store2.nseed = newboard.store2.nseed + newboard.north_house.get(updated.type).nseed + 1; 
+			} else if ((i == nseed - 1) && updated.type > 0 && updated.nseed == 0
+					&& newboard.north_house.get(updated.type).nseed != 0) {
+				newboard.store2.nseed = newboard.store2.nseed + newboard.north_house.get(updated.type).nseed + 1;
 				updated.nseed = 0;
 				newboard.north_house.get(updated.type).nseed = 0;
-			}
-			else{
+			} else {
 				updated.nseed++;
 			}
 			q.add(updated);
-			
 		}
-		// Check whether one side is all zeros or not.
-		// North all zero => south nseed go to store2
-		// South all zero => north nseed go to store1
-		// Check north
+		/*
+		 * Check whether one side is all zeros or not. North all zero => south
+		 * nseed go to store2 South all zero => north nseed go to store1 Check
+		 * north
+		 */
 		int allsouth = 0;
 		int allnorth = 0;
 		boolean allnorthzero = true;
 		boolean allsouthzero = true;
-		for(int i = 0; i < newboard.north_house.size(); i++){
-			if(newboard.north_house.get(i).nseed != 0){
+		for (int i = 0; i < newboard.north_house.size(); i++) {
+			if (newboard.north_house.get(i).nseed != 0) {
 				allnorthzero = false;
 			}
 			allsouth = allsouth + newboard.south_house.get(i).nseed;
 		}
-		for(int i = 0; i < newboard.south_house.size(); i++){
-			if(newboard.south_house.get(i).nseed != 0){
+		for (int i = 0; i < newboard.south_house.size(); i++) {
+			if (newboard.south_house.get(i).nseed != 0) {
 				allsouthzero = false;
 			}
 			allnorth = allnorth + newboard.north_house.get(i).nseed;
 		}
-		if(allnorthzero == true){
+		if (allnorthzero == true) {
 			newboard.store2.nseed += allsouth;
-			for(int i = 0; i < newboard.south_house.size();i++){
+			for (int i = 0; i < newboard.south_house.size(); i++) {
 				newboard.south_house.get(i).nseed = 0;
 			}
 		}
-		if(allsouthzero == true){
+		if (allsouthzero == true) {
 			newboard.store1.nseed += allnorth;
-			for(int i = 0; i < newboard.north_house.size();i++){
+			for (int i = 0; i < newboard.north_house.size(); i++) {
 				newboard.north_house.get(i).nseed = 0;
 			}
 		}
 		return newboard;
 	}
-	
 
 	public void drawBoard() {
-		System.out.print(Integer.toString(store1.nseed)+ "|");
-		for(int i = 0; i < north_house.size(); i++){
+		System.out.print(Integer.toString(store1.nseed) + "|");
+		for (int i = 0; i < north_house.size(); i++) {
 			System.out.print(north_house.get(i).nseed);
 		}
 		System.out.println("|");
-		
+
 		System.out.print(" |");
-		for(int i = 0; i < south_house.size(); i++){
+		for (int i = 0; i < south_house.size(); i++) {
 			System.out.print(south_house.get(i).nseed);
 		}
 		System.out.print("|");
-		System.out.println(Integer.toString(store2.nseed));		
-	}	
+		System.out.println(Integer.toString(store2.nseed));
+	}
 }
