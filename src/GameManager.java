@@ -4,6 +4,12 @@
 	Authors: 
 */
 
+import java.util.Scanner;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
@@ -34,9 +40,17 @@ public class GameManager {
 
 	Scanner reader = new Scanner(System.in);
 
-	public GameManager() {
-		newGame();
-		gui = new KalahGUI();
+	public boolean win_store1;
+	public boolean win_store2;
+	public int nseeds_all_south;
+	public int nseeds_all_north;
+	public GameManager(){
+	//	newGame();
+	//	gui = new KalahGUI();
+		win_store1 = false;
+		win_store2 = false;
+		nseeds_all_south = 0;
+		nseeds_all_north = 0;
 	}
 	
 	public GameManager(int house, int seed, long time, char turn_num, char set_rand, int[] random, char AI_type) {
@@ -51,14 +65,14 @@ public class GameManager {
 
 	public void makeMove(int location) {
 		System.out.print("Updating Game\n");
-		board.sowSeeds(location);
+	//	board.sowSeeds(location);
 	}
 	
 	public boolean isStarted(){
 		return started;
 	}
 
-	public boolean isValidMove(int location) {
+/*	public boolean isValidMove(int location) {
 		if (location > 0 && location < board.getSeeds().length-1) {
 			if (player_1.getTurn() == true) {
 				if (location <= board.getSeeds().length-1/2) {
@@ -79,7 +93,7 @@ public class GameManager {
 		}
 		return false;
 	}
-
+*/
 	public void startTimer() {
 		remaining_time = timer_val;
 		timer = new Timer(1000, new ActionListener() {
@@ -204,7 +218,7 @@ public class GameManager {
 					seeds[i] = in.nextInt();	
 				}
 			}
-			board = new Board(houses, seeds);
+		//	board = new Board(houses, seeds);
 		}
 		else {
 			board = new Board(houses, seeds_per);
@@ -252,7 +266,7 @@ public class GameManager {
 			for(int i = 0; i > houses; i++) {
 					seeds[i] = random[i];	
 			}
-			board = new Board(houses, seeds);
+	//		board = new Board(houses, seeds);
 		}
 		else {
 			board = new Board(houses, seeds_per);
@@ -263,7 +277,7 @@ public class GameManager {
 		//player_name = reader.next();
 
 		//create and set players
-		if (player_choice == 'F') {
+	/*	if (player_choice == 'F') {
 			player_1 = new AI(AI_type);
 			player_2 = new AI(AI_type);
 		}
@@ -271,7 +285,7 @@ public class GameManager {
 			player_1 = new AI(AI_type);
 			player_2 = new AI(AI_type);
 		}
-		
+	*/	
 		turn_num = 0;
 		player_1.setTurn(true);
 	}
@@ -295,7 +309,7 @@ public class GameManager {
 		board = new Board(houses, seeds_per);
 		
 		//create and set players
-		if (player_choice == 'F') {
+	/*	if (player_choice == 'F') {
 			player_1 = new AI(AI_type);
 			player_2 = new AI(AI_type);
 		}
@@ -303,7 +317,7 @@ public class GameManager {
 			player_1 = new AI(AI_type);
 			player_2 = new AI(AI_type);
 		}
-		
+*/		
 		turn_num = 0;
 		player_1.setTurn(true);
 	}
@@ -319,5 +333,34 @@ public class GameManager {
 
 	public void drawGame() {
 		board.drawBoard();
+	}
+
+
+
+	public boolean checkwin(Vector<JButton> buttons_south, Vector<JButton> buttons_north, JLabel store1, JLabel store2){
+		/* Check either north side or south side has all "0"
+		 * Then game stops and sends one side's all seed to either store 1
+		 * and store 2.
+		 */
+		win_store1 = true;
+		nseeds_all_south = 0;
+		//north side check all houses if it is equal to 0
+		for (int i = 0; i < buttons_south.size(); i++) {
+			if (Integer.parseInt(buttons_south.elementAt(i).getText()) != 0) {
+				win_store1 = false;
+			}
+			nseeds_all_south = nseeds_all_south + Integer.parseInt(buttons_south.elementAt(i).getText());
+		}
+		win_store2 = true;
+		nseeds_all_north = 0;
+		//north side check all houses if it is equal to 0
+		for (int i = 0; i < buttons_north.size(); i++) {
+			if (Integer.parseInt(buttons_north.elementAt(i).getText()) != 0) {
+				win_store2 = false;
+			}
+			nseeds_all_north = nseeds_all_north + Integer.parseInt(buttons_north.elementAt(i).getText());
+		}
+		
+		return true;
 	}
 }
