@@ -8,37 +8,22 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Color;
 import java.awt.Dimension;
-
-import javax.swing.UIManager;
-import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
-
-import java.awt.Button;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
 import java.awt.SystemColor;
 
 public class Game extends JFrame {
 	private Vector<JButton> buttons_south = new Vector<JButton>();//store all the buttons in the north
 	private Vector<JButton> buttons_north = new Vector<JButton>();//store all the buttons in the south
-//	static Board board;
 	private JLabel store1;
 	private JPanel store_label1;
 	private JLabel store2;
@@ -80,7 +65,6 @@ public class Game extends JFrame {
 		finished = false;
 		nhouse_per = Integer.parseInt(houses_per);
 		nseed_per = Integer.parseInt(seeds_per);
-	//	board = new Board(nhouse_per * 2 + 2, nseed_per);
 		setTitle("Kalah Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 631, 300);
@@ -140,8 +124,6 @@ public class Game extends JFrame {
 		panelSouth.setBackground(Color.WHITE);
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 		panelSouth.setPreferredSize(new Dimension(50, 50));
-
-		// nhouse_per = Integer.parseInt(houses_per);
 		panelSouth.setLayout(new GridLayout(1, nhouse_per));
 		panelNorth.setLayout(new GridLayout(1, nhouse_per));
 
@@ -279,8 +261,7 @@ public class Game extends JFrame {
 					// Send seed to the following house from top of queue
 					for (int i = 0; i < seed_amount; i++) {
 						JButton top = (JButton) searchingQ.peek();
-						if ((Integer) top.getClientProperty("ID") < 0) { // Seed to
-																			// store
+						if ((Integer) top.getClientProperty("ID") < 0) { // Seed to store
 							if ((Integer) top.getClientProperty("ID") == -1) {
 								String store1text = store1.getText(); // store 1(?)
 								int length = store1text.length();
@@ -393,7 +374,6 @@ public class Game extends JFrame {
 								break;
 							}
 						}
-						
 						// Put back the nextboard onto GUI and let player know what AI did
 						for(int i = 0; i < nextboard.north_house.size(); i++)
 							buttons_north.get(i).setText(Integer.toString(nextboard.north_house.get(i).nseed));
@@ -402,8 +382,7 @@ public class Game extends JFrame {
 						store1.setText("Store 1(" + Integer.toString(nextboard.store1.nseed) + ")");
 						store2.setText("Store 2(" + Integer.toString(nextboard.store2.nseed) + ")");
 						
-						/* Use GameManager to check either store1 or store2 wint
-						 */
+						// Use GameManager to check either store1 or store2 win
 						judge = new GameManager();
 						judge.checkwin(buttons_south, buttons_north, store1, store2);
 						nseed_store1 = Integer.parseInt(store1.getText().substring(8, store1.getText().length() - 1));
@@ -437,7 +416,6 @@ public class Game extends JFrame {
 					}
 				}
 			}
-			
 		}
 	}
 }
