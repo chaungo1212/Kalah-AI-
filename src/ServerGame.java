@@ -41,6 +41,7 @@ public class ServerGame extends JFrame {
 	private boolean finished;
 	private GameManager judge;
 	public Vector<Integer> Player_move_indices;
+	public Vector<Integer> op_move_indices;
 	
 	
 	private String message;
@@ -108,148 +109,188 @@ public class ServerGame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	public Socket getSocket() {
+		return server_socket;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	
+	public void setMessage(String new_message) {
+		message = new_message;
+	}
+	
+	public void giveMoves(Vector<Integer> moves) {
+		//compile all moves into string
+		String str = "";
+		for (Integer i : moves) {
+			str = str + " " + Integer.toString(i);
+		}
+		//set message
+		setMessage(str);
+		//send message
+		p_stream.println(getMessage());
+	}
+	
+	public Vector<Integer> parseMoves(String str) {
+		String[] splited = str.split("\\s+");
+		Vector<Integer> moves = new Vector<Integer>();
+		for (int i = 0; i < splited.length; i++) {
+			moves.add(Integer.parseInt(splited[i]));
+		}
+		return moves;
+	}
+	
+	public void getMoves() {
+		//wait for moves to arrive
+		String moves = socket_scanner.nextLine();
+		op_move_indices = parseMoves(moves);
+	}
 
 	public ServerGame(String houses_per, String seeds_per) {
-		
-		finished = false;
-		nhouse_per = Integer.parseInt(houses_per);
-		nseed_per = Integer.parseInt(seeds_per);
-		setTitle("Kalah Game");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 631, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-
-		/************************/
-		/******* West Panel *******/
-		/************************/
-		JPanel panelWest = new JPanel();
-		contentPane.add(panelWest, BorderLayout.WEST);
-		store_label1 = new JPanel();
-		store_label1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		store_label1.setPreferredSize(new Dimension(100, 50));
-		store_label1.setForeground(Color.YELLOW);
-		store_label1.setBackground(Color.DARK_GRAY);
-		store1 = new JLabel("Store 1(0)");
-		store1.setForeground(Color.YELLOW);
-		store1.putClientProperty("ID", -1);
-		store1.setFont(new Font("Tamaho", Font.BOLD, 15));
-		store_label1.add(store1);
-		panelWest.add(store_label1);
-
-		/************************/
-		/******* East Panel *******/
-		/************************/
-		JPanel panelEast = new JPanel();
-		contentPane.add(panelEast, BorderLayout.EAST);
-		store_label2 = new JPanel();
-		store_label2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		store_label2.setPreferredSize(new Dimension(100, 50));
-		store_label2.setForeground(Color.YELLOW);
-		store_label2.setBackground(Color.DARK_GRAY);
-		store2 = new JLabel("Store 2(0)");
-		store2.setForeground(Color.YELLOW);
-		store2.setFont(new Font("Tamaho", Font.BOLD, 15));
-		store2.putClientProperty("ID", -2);
-		store_label2.add(store2);
-		panelEast.add(store_label2);
-
-		/*************************/
-		/******* North Panel *******/
-		/*************************/
-		JPanel panelNorth = new JPanel();
-		panelNorth.setForeground(Color.YELLOW);
-		panelNorth.setBackground(Color.WHITE);
-		contentPane.add(panelNorth, BorderLayout.NORTH);
-		panelNorth.setPreferredSize(new Dimension(90, 50));
-
-		/************************/
-		/****** South Panel *******/
-		/************************/
-		JPanel panelSouth = new JPanel();
-		panelSouth.setForeground(Color.YELLOW);
-		panelSouth.setBackground(Color.WHITE);
-		contentPane.add(panelSouth, BorderLayout.SOUTH);
-		panelSouth.setPreferredSize(new Dimension(50, 50));
-		panelSouth.setLayout(new GridLayout(1, nhouse_per));
-		panelNorth.setLayout(new GridLayout(1, nhouse_per));
-
-		/************************/
-		/****** Center Panel *******/
-		/************************/
-		// new game button and time label
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(1, 2));
-		JPanel panel_button = new JPanel();
-		JButton new_game = new JButton("New Game");
-		new_game.setForeground(Color.YELLOW);
-		new_game.setBackground(Color.DARK_GRAY);
-		new_game.setSize(10, 10);
-		new_game.putClientProperty("ID", -3);
-		panel_button.add(new_game);
-
-		JPanel panel_label = new JPanel();
-		JLabel time = new JLabel("Time");
-		time.setBackground(SystemColor.controlShadow);
-		panel_button.add(time);
-		panel.add(panel_button);
-		time_label = new JLabel("");
-		time_label.setForeground(Color.RED);
-		time_label.setBackground(Color.WHITE);
-		panel_button.add(time_label);
-		panel.add(panel_label);
-		
-		JButton button_reset = new JButton("Reset");
-		button_reset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timer.stop();
-				dispose();
-				ServerGame frame = new ServerGame("6","4");
-				frame.setVisible(true);
-				
-			}
-		});
-		button_reset.setForeground(Color.YELLOW);
-		button_reset.setBackground(Color.DARK_GRAY);
-		button_reset.setSize(10, 10);
-		panel_label.add(button_reset);
-
-		ButtonsListener button_listener = new ButtonsListener();
-		new_game.addActionListener(button_listener);
-		for (int i = 0; i < nhouse_per; i++) {
-			JButton button_south = new JButton(seeds_per);
-			JButton button_north = new JButton(seeds_per);
-			button_south.addActionListener(button_listener);
-			button_north.addActionListener(button_listener);
-			button_north.putClientProperty("ID", i);
-			button_south.putClientProperty("ID", i + nhouse_per);
-
-			buttons_south.add(button_south);
-			buttons_north.add(button_north);
-
-			panelSouth.add(button_south);
-			panelNorth.add(button_north);
-
-		}
-		// Timer setting allow 60 seconds for user to input
-		remaining_time = 60;
-		time_label.setText(Integer.toString(remaining_time));
-		timer = new Timer(1000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (remaining_time == 0) {
-					((Timer) e.getSource()).stop();
-					JOptionPane.showMessageDialog(null, "Out of time!");
-				} else {
-					remaining_time--;
-					time_label.setText(Integer.toString(remaining_time));
+		//while (getSocket().isConnected()) {
+			finished = false;
+			nhouse_per = Integer.parseInt(houses_per);
+			nseed_per = Integer.parseInt(seeds_per);
+			setTitle("Kalah Game");
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 631, 300);
+			contentPane = new JPanel();
+			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+			setContentPane(contentPane);
+			contentPane.setLayout(new BorderLayout(0, 0));
+	
+			/************************/
+			/******* West Panel *******/
+			/************************/
+			JPanel panelWest = new JPanel();
+			contentPane.add(panelWest, BorderLayout.WEST);
+			store_label1 = new JPanel();
+			store_label1.setBorder(new LineBorder(new Color(0, 0, 0)));
+			store_label1.setPreferredSize(new Dimension(100, 50));
+			store_label1.setForeground(Color.YELLOW);
+			store_label1.setBackground(Color.DARK_GRAY);
+			store1 = new JLabel("Store 1(0)");
+			store1.setForeground(Color.YELLOW);
+			store1.putClientProperty("ID", -1);
+			store1.setFont(new Font("Tamaho", Font.BOLD, 15));
+			store_label1.add(store1);
+			panelWest.add(store_label1);
+	
+			/************************/
+			/******* East Panel *******/
+			/************************/
+			JPanel panelEast = new JPanel();
+			contentPane.add(panelEast, BorderLayout.EAST);
+			store_label2 = new JPanel();
+			store_label2.setBorder(new LineBorder(new Color(0, 0, 0)));
+			store_label2.setPreferredSize(new Dimension(100, 50));
+			store_label2.setForeground(Color.YELLOW);
+			store_label2.setBackground(Color.DARK_GRAY);
+			store2 = new JLabel("Store 2(0)");
+			store2.setForeground(Color.YELLOW);
+			store2.setFont(new Font("Tamaho", Font.BOLD, 15));
+			store2.putClientProperty("ID", -2);
+			store_label2.add(store2);
+			panelEast.add(store_label2);
+	
+			/*************************/
+			/******* North Panel *******/
+			/*************************/
+			JPanel panelNorth = new JPanel();
+			panelNorth.setForeground(Color.YELLOW);
+			panelNorth.setBackground(Color.WHITE);
+			contentPane.add(panelNorth, BorderLayout.NORTH);
+			panelNorth.setPreferredSize(new Dimension(90, 50));
+	
+			/************************/
+			/****** South Panel *******/
+			/************************/
+			JPanel panelSouth = new JPanel();
+			panelSouth.setForeground(Color.YELLOW);
+			panelSouth.setBackground(Color.WHITE);
+			contentPane.add(panelSouth, BorderLayout.SOUTH);
+			panelSouth.setPreferredSize(new Dimension(50, 50));
+			panelSouth.setLayout(new GridLayout(1, nhouse_per));
+			panelNorth.setLayout(new GridLayout(1, nhouse_per));
+	
+			/************************/
+			/****** Center Panel *******/
+			/************************/
+			// new game button and time label
+			JPanel panel = new JPanel();
+			contentPane.add(panel, BorderLayout.CENTER);
+			panel.setLayout(new GridLayout(1, 2));
+			JPanel panel_button = new JPanel();
+			JButton new_game = new JButton("New Game");
+			new_game.setForeground(Color.YELLOW);
+			new_game.setBackground(Color.DARK_GRAY);
+			new_game.setSize(10, 10);
+			new_game.putClientProperty("ID", -3);
+			panel_button.add(new_game);
+	
+			JPanel panel_label = new JPanel();
+			JLabel time = new JLabel("Time");
+			time.setBackground(SystemColor.controlShadow);
+			panel_button.add(time);
+			panel.add(panel_button);
+			time_label = new JLabel("");
+			time_label.setForeground(Color.RED);
+			time_label.setBackground(Color.WHITE);
+			panel_button.add(time_label);
+			panel.add(panel_label);
+			
+			JButton button_reset = new JButton("Reset");
+			button_reset.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					timer.stop();
+					dispose();
+					ServerGame frame = new ServerGame("6","4");
+					frame.setVisible(true);
+					
 				}
+			});
+			button_reset.setForeground(Color.YELLOW);
+			button_reset.setBackground(Color.DARK_GRAY);
+			button_reset.setSize(10, 10);
+			panel_label.add(button_reset);
+	
+			ButtonsListener button_listener = new ButtonsListener();
+			new_game.addActionListener(button_listener);
+			for (int i = 0; i < nhouse_per; i++) {
+				JButton button_south = new JButton(seeds_per);
+				JButton button_north = new JButton(seeds_per);
+				button_south.addActionListener(button_listener);
+				button_north.addActionListener(button_listener);
+				button_north.putClientProperty("ID", i);
+				button_south.putClientProperty("ID", i + nhouse_per);
+	
+				buttons_south.add(button_south);
+				buttons_north.add(button_north);
+	
+				panelSouth.add(button_south);
+				panelNorth.add(button_north);
+	
 			}
-		});
-		timer.start();
-		//System.out.println("Your turn.");
+			// Timer setting allow 60 seconds for user to input
+			remaining_time = 60;
+			time_label.setText(Integer.toString(remaining_time));
+			timer = new Timer(1000, new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (remaining_time == 0) {
+						((Timer) e.getSource()).stop();
+						JOptionPane.showMessageDialog(null, "Out of time!");
+					} else {
+						remaining_time--;
+						time_label.setText(Integer.toString(remaining_time));
+					}
+				}
+			});
+			timer.start();
+			//System.out.println("Your turn.");
+		//}
 	}
 
 	private class ButtonsListener implements ActionListener {
@@ -409,13 +450,11 @@ public class ServerGame extends JFrame {
 							finished = true;
 						}
 					}
-					/*if(free_turn == true){
-						//System.out.println("You get a free turn.");
-						return;
-					}*/
+					giveMoves(Player_move_indices);
+					getMoves();
 				}
 			}
-			//giveMoves();
+
 			return;
 		}
 		

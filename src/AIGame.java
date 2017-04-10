@@ -240,10 +240,6 @@ public class AIGame extends JFrame {
 						finished = true;
 					}
 				}
-				if(free_turn == true){
-					System.out.println("You get a free turn.");
-					return;
-				}
 				
 				// AI working part
 				System.out.println("AI 2 turn.");
