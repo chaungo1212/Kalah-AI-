@@ -1,4 +1,3 @@
-import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ConnectException;
@@ -21,7 +20,7 @@ public class NewClient {
 	int client_turn;
 	long timer_val;
 	Board b;
-	KalahGUI gui;
+	Game game;
 	boolean ai;
 	
 	private static final String red = "READY";
@@ -106,7 +105,7 @@ public class NewClient {
 				// Main Game Loop
 				c.client_scanner.nextLine(); //gets welcome
 				String gamein = c.client_scanner.nextLine(); //gets game_info
-				Board board = c.setGameInfo(gamein); 
+				c.b = c.setGameInfo(gamein); 
 				
 				if(c.ai) {
 					c.setMessage(red);	//sends READY
@@ -143,15 +142,24 @@ public class NewClient {
 					System.out.println(red);
 					String begin = c.client_scanner.nextLine(); //gets begin
 					System.out.println(begin);
-					
+					// *****
 					//launch gui and prepare player
 					while (c.client_scanner.hasNextLine()) {		
 						String input = c.client_scanner.nextLine();
 						
 						while (input != "WINNER" || input != "LOSER" || input != "TIME" || input != "ILLEGAL" || input != "TIE") {
+							//client turn
 							if(c.cur_turn%2 == c.client_turn) {
-								
+								// *****
+								//get client turn
+								if (c.ai) {
+									//get AI move
+								}
+								else {
+									//get player move
+								}
 							}
+							//server turn
 							else {
 								//input is move
 								c.setMessage(ok);

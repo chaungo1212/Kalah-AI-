@@ -38,6 +38,7 @@ public class Game extends JFrame {
 	private JLabel time_label;
 	private boolean finished;
 	private GameManager judge;
+	public Vector<Integer> AI_move_indices;
 
 	/**
 	 * sLaunch the application.
@@ -185,7 +186,7 @@ public class Game extends JFrame {
 			panelNorth.add(button_north);
 
 		}
-		// Timer setting allow 10 seconds for user to input
+		// Timer setting allow 60 seconds for user to input
 		remaining_time = 60;
 		time_label.setText(Integer.toString(remaining_time));
 		timer = new Timer(1000, new ActionListener() {
@@ -375,7 +376,7 @@ public class Game extends JFrame {
 						currentboard.store2.nseed = Integer.parseInt(store2.getText().substring(8, store2.getText().length() - 1));
 						AI smart = new AI();
 						Board nextboard = smart.search_move(currentboard);
-						Vector<Integer> AI_move_indices = new Vector<Integer>(); // All move indices for AI
+						AI_move_indices = new Vector<Integer>(); // All move indices for AI
 						AI_move_indices.add(nextboard.move_index);
 						while(true){
 							if(nextboard.free_turn == true){

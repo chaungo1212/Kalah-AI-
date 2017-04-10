@@ -31,7 +31,7 @@ public class NewServer {
 	Player c_player;
 	private String game_config;
 	Board b;
-	KalahGUI gui;
+	Game game;
 	private int houses;
 	private int seeds;
 	private int server_turn;
@@ -276,8 +276,6 @@ public class NewServer {
 					p_stream.println(s.getMessage());
 					//GameManager game_manager = new GameManager(s.houses, s.seeds, s.timer, s.turn_num, s.set_rand, s.random, 'm');
 					boolean game_over = false;
-					int score1 = 0;
-					int score2 = 0;
 					String move = "";
 					int t = 0;
 					
