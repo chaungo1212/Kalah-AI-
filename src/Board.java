@@ -226,6 +226,7 @@ public class Board {
 	public boolean free_turn; // in searching
 	public float score; // for maxmin searching tree to choose
 	public Board parent;
+	public int move_index; // the house selected to move this board
 
 	public Board(int nhouse_per, int nseed) {
 		north_house = new Vector<House>();
