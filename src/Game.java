@@ -200,6 +200,7 @@ public class Game extends JFrame {
 			}
 		});
 		timer.start();
+		System.out.println("Your turn.");
 	}
 
 	private class ButtonsListener implements ActionListener {
@@ -258,6 +259,7 @@ public class Game extends JFrame {
 							searchingQ.add(top);
 						}
 					}
+					boolean free_turn = false;
 					// Send seed to the following house from top of queue
 					for (int i = 0; i < seed_amount; i++) {
 						JButton top = (JButton) searchingQ.peek();
@@ -281,6 +283,9 @@ public class Game extends JFrame {
 								store2.setText(store2text);
 								searchingQ.poll();
 								searchingQ.add(top);
+								if(i == seed_amount - 1){ // the last seed
+									free_turn = true;
+								}
 							}
 						} else { // Seed to house
 							if (i == seed_amount - 1) { // the last seed
@@ -353,8 +358,13 @@ public class Game extends JFrame {
 							finished = true;
 						}
 					}
+					if(free_turn == true){
+						System.out.println("You get a free turn.");
+						return;
+					}
 					
 					// AI working part
+					System.out.println("AI's turn.");
 					if(judge.win_store1 == false && judge.win_store2 == false){
 						Board currentboard = new Board(nhouse_per, nseed_per);
 						for(int i = 0; i < buttons_north.size(); i++)
@@ -365,15 +375,22 @@ public class Game extends JFrame {
 						currentboard.store2.nseed = Integer.parseInt(store2.getText().substring(8, store2.getText().length() - 1));
 						AI smart = new AI();
 						Board nextboard = smart.search_move(currentboard);
-					
+						Vector<Integer> AI_move_indices = new Vector<Integer>(); // All move indices for AI
+						AI_move_indices.add(nextboard.move_index);
 						while(true){
 							if(nextboard.free_turn == true){
 								nextboard = smart.search_move(nextboard);
+								AI_move_indices.add(nextboard.move_index);
 							}
 							else{
 								break;
 							}
 						}
+						System.out.print("AI's move indices(including all free turn):");
+						for(int i = 0; i < AI_move_indices.size(); i++)
+							System.out.print(Integer.toString(AI_move_indices.get(i)) + ",");
+						System.out.println();
+						
 						// Put back the nextboard onto GUI and let player know what AI did
 						for(int i = 0; i < nextboard.north_house.size(); i++)
 							buttons_north.get(i).setText(Integer.toString(nextboard.north_house.get(i).nseed));
@@ -416,6 +433,8 @@ public class Game extends JFrame {
 					}
 				}
 			}
+			System.out.println("Your turn.");
+			return;
 		}
 	}
 }
