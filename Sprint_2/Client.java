@@ -6,39 +6,20 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class AIClient {
+public class Client {
 	String message;
 	Socket client_socket;
 	Scanner client_scanner;
 	String game_info;
 	String player_move;
-	int turn;
-	int client_turn;
-	AI this_AI;
-	Board b;
 	
 	private static final String red = "READY";
 	private static final String ok = "OK";
 	private static final String again = "AGAIN";
 	
-	public AIClient() throws IOException {
+	public Client() throws IOException {
 		client_socket = new Socket("127.0.0.1", 4444);
 		client_scanner = new Scanner(client_socket.getInputStream());
-		turn=0;
-		//change this to test
-		this_AI = new AI();
-	}
-	
-	public AI getAI() {
-		return this_AI;
-	}
-	
-	public int getTurn() {
-		return turn;
-	}
-	
-	public int getClientTurn() {
-		return client_turn;
 	}
 	
 	public String getMessage() {
@@ -53,33 +34,8 @@ public class AIClient {
 		return game_info;
 	}
 	
-	public Board setGameInfo(String new_info) {
+	public void setGameInfo(String new_info) {
 		game_info = new_info;
-		String info = new_info.substring(4);
-		//houses
-		int houses = Integer.parseInt(info);
-		info = info.substring(2);
-		//seeds
-		int seeds = Integer.parseInt(info);
-		info = info.substring(2);
-		//time
-		Long time = Long.parseLong(info);
-		while (Character.isDigit(info.charAt(0)) == true) {
-			info = info.substring(1);
-		}
-		info = info.substring(1);
-		char c = info.charAt(0);
-		switch (c) {
-			case 'F':
-				client_turn = 0;
-				break;
-			case 'S':
-				client_turn = 1;
-				break;
-			default:
-				client_turn = 0;
-		}
-		return new Board(houses, seeds);
 	}
 	
 	public void close() {
@@ -98,7 +54,7 @@ public class AIClient {
 
 	public static void main(String args[]) throws UnknownHostException, ConnectException, IOException{
 		try {
-			AIClient c = new AIClient();
+			Client c = new Client();
 			Scanner scanner = new Scanner(System.in);
 			//System.out.println("Pass to server: ");
 			//c.setMessage(scanner.nextLine());
@@ -115,44 +71,48 @@ public class AIClient {
 				/*****************************************************
 				 * Main Game Loop
 				 ****************************************************/
-				String wel = c.client_scanner.nextLine(); //gets welcome
-				String gamein = c.client_scanner.nextLine();
-				Board board = c.setGameInfo(gamein); //gets game_info
+				c.client_scanner.nextLine(); //gets Welcome
+				c.setGameInfo(c.client_scanner.nextLine()); //gets game_info
 				
 				c.setMessage(red);	//sends READY
 				p_stream.println(c.getMessage());
-				System.out.println(red);
-				String ai_move;
 				
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							KalahGUI window = new KalahGUI();
+							window.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 				
-				String begin = c.client_scanner.nextLine(); //gets begin
-				System.out.println(begin);
-				
-				while (c.client_scanner.hasNextLine()) {		
-					String input = c.client_scanner.nextLine();
+				//while not game over
+					//if client turn
+						//player_move = getMove(scanner.nextLine());
+						//c.setMessage(player_move);	//sends move
+						//p_stream.println(c.getMessage());
+					//else server turn
+						//c.client_scanner.nextLine(); //gets move
+						//setMessage(ok);
+						//p_stream.println(getMessage());
 					
-					while (input != "WINNER" || input != "LOSER" || input != "TIME" || input != "ILLEGAL" || input != "TIE") {
-						if(c.turn%2 == c.client_turn) {
-							ai_move = c.this_AI.search_move(board);
-							c.setMessage(ai_move);	//sends move
-							p_stream.println(c.getMessage());
-							c.turn++;
-							System.out.println(c.turn);
-						}
-						else {
-							//input is move
-							c.setMessage(ok);
-							p_stream.println(c.getMessage());
-							c.turn++;
-							System.out.println(c.turn);
-						}
-				}	
-				//bye
+				
+				System.out.println("Play Again? : (y/n)");
+				if (scanner.nextLine().charAt(0) == 'n') {
+					scanner.close();
+					quit = true;
+				}
+				else {
+					quit = false;
+					c.setMessage(again);	//sends AGAIN
+					p_stream.println(c.getMessage());
+				}
 			}
 			
 			scanner.close();
 			c.close();
-			}
 		}
 		catch (IOException i) {
 	            System.err.println("Couldn't get I/O for the connection to: localhost.");

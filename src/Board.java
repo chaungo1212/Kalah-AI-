@@ -246,6 +246,27 @@ public class Board {
 		parent = null;
 		score = 0;
 	}
+	
+	public Board(int houses, int[] seeds_per) {
+		// initialize seeds in each index based on rules given
+		north_house = new Vector<House>();
+		south_house = new Vector<House>();
+		for (int i = 0; i < houses; i++) {
+			House north = new House(seeds_per[seeds_per.length - i]);
+			House south = new House(seeds_per[i]);
+			north.type = i;
+			south.type = i;
+			north_house.add(north);
+			south_house.add(south);
+		}
+		store1 = new House();
+		store1.type = -1;
+		store2 = new House();
+		store2.type = -2;
+		free_turn = false;
+		parent = null;
+		score = 0;
+	}
 
 	public Board(Board b) {
 		north_house = new Vector<House>();

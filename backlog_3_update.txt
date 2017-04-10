@@ -1,0 +1,49 @@
+Sprint 3 - Backlog
+SCRUM Leader - Sarah White
+
+GUI
+* Sub menus to store information about the game parameters
+   * Select if he/she will play as player 1 or 2 - not completed
+   * Select difficulty of the AI - not completed (scrapped)
+   * Enters his/her own custom name via keyboard - not completed
+* User is prompted if it their turn or the AIs - completed
+* A timer is updated and can be set to different values - completed
+* Each piece is moved to correct location on the board - completed
+* Contains any images to use for the widgets - not completed
+
+AI
+* Choose random valid move(beginner) - not completed
+* Use minimax-tree with alpha-beta pruning - not completed 
+   * Up to 2 levels(easy) - not completed (scrapped)
+   * Up to half the tree(medium) - not completed (scrapped)
+   * Up to the whole tree(hard) - not completed (scrapped)
+* Use minimax-tree with pruning - completed
+   * Looks down 2 levels at every turn - completed
+
+Client Server - not completed
+* Initialize game config from file or from GUI(user) - not completed
+* Start a game - completed
+	* Server sends info to client - completed
+	* Client parse game info given to make GUI - completed
+	* Client sends ready - completed
+	* P1 sends move - completed
+	* Server sends AI move info - completed
+	* Server checks validity of move/timer - completed
+	
+Pie Rule - completed
+* Give button for user to press - completed
+* Allow AI to use Pie rule - not completed
+* Send move "P" through client server - completed
+* Set invalid if it is not the first turn of the second player - completed
+	
+* Meeting Times
+	* Monday 4:00 PM
+	* Wednesday 4:00 PM
+	* Thursday 4:00 PM
+
+* Work Distribution
+	* The Client-Server portion will be dealt with by Sarah, while Chloe
+	works to update the GUI, both members will work on building the AI
+	 -- the Client-Server portion was dealt with by Sarah, while Chloe
+	 worked to build the AI and update the GUI
+

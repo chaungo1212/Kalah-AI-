@@ -92,8 +92,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
-public class AI {
+public class AI extends Player {
 	public AI() {
+		super("computer");
 	}
 
 	public Board search_move(Board current_board) { // return the Board after AIdecides to move

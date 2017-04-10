@@ -16,8 +16,8 @@ public class AIServer {
 	private String game_config;
 	
 	Board board;
-	Player player_1;
-	Player player_2;
+	AI player_1;
+	AI player_2;
 	KalahGUI gui;
 	private int houses;
 	private int seeds;
@@ -208,8 +208,8 @@ public class AIServer {
 			board = new Board(houses, seeds);
 		}
 
-		player_1 = new AI(AI_type);
-		player_2 = new AI(AI_type);
+		player_1 = new AI();
+		player_2 = new AI();
 	}
 	
 	
@@ -261,7 +261,7 @@ public class AIServer {
 		}
 	}
 	*/
-	public Player startGame(PrintStream p_stream, AI ai, AI ai2) {
+	public AI startGame(PrintStream p_stream, AI ai, AI ai2) {
 		boolean game_over = false;
 		int score1 = 0;
 		int score2 = 0;
@@ -301,7 +301,7 @@ public class AIServer {
 						if (turn_num == 1 && move == "P") {
 							board.flipBoard();
 							//swap players
-							Player temp;
+							AI temp;
 							temp = player_1;
 							player_1 = player_2;
 							player_2 = temp;
@@ -328,7 +328,7 @@ public class AIServer {
 			return ai2;
 		}
 		else {
-			Player tie = new Player("tie");
+			AI tie = new AI();
 			return tie;
 		}
 	}

@@ -14,8 +14,8 @@ import java.util.Scanner;
 public class KalahSimple {
 	
 	Board board;
-	Player player_1;
-	Player player_2;
+	AI player_1;
+	AI player_2;
 	KalahGUI gui;
 	private int houses = 6;
 	private int seeds = 4;
@@ -38,7 +38,8 @@ public class KalahSimple {
 						//move = minimax();
 						//run minimax to get move
 						//returns house number to move from
-						t = gm.getBoard().sowSeeds(Integer.parseInt(move));
+						//t = gm.getBoard().sowSeeds(Integer.parseInt(move));
+						gm.getP1().search_move(gm.getBoard());
 						if (t == 1) {
 							gm.getP2().setTurn(true);
 							gm.getP1().setTurn(false);
@@ -79,7 +80,17 @@ public class KalahSimple {
 				}
 			}
 		}
-		return (AI) gm.whoWon();
+		if (gm.getP1Score() > gm.getP2Score()) {
+			return gm.getP1();
+		}
+		else if (gm.getP1Score() < gm.getP2Score()) {
+			return gm.getP2();
+		}
+		else {
+			AI tie = new AI();
+			tie.setScore(gm.getP1Score());
+			return tie;
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -94,12 +105,13 @@ public class KalahSimple {
 			 * Main Game Loop
 			 ****************************************************/
 			GameManager game_manager = new GameManager(k.houses, k.seeds, k.timer, k.turn, 'm');
-			
-			Player p = startGame(game_manager);
+			game_manager.setP1(new AI());
+			game_manager.setP2(new AI());
+			AI p = startGame(game_manager);
 			
 			System.out.println("Winner:");
-			System.out.print(p.getUsername());
-			System.out.println(" " + p.getScore());
+			//System.out.print(p.getUsername());
+			//System.out.println(" " + p.getScore());
 			
 			System.out.println();
 			System.out.println();

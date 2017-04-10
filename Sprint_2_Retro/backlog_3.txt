@@ -1,0 +1,39 @@
+Sprint 3 - Backlog
+SCRUM Leader - Sarah White
+
+GUI
+* Sub menus to store information about the game parameters
+   * Select if he/she will play as player 1 or 2
+   * Select difficulty of the AI
+   * Enters his/her own custom name via keyboard
+* User if prompted if it their turn or the AIs
+* A timer is updated and can be set to different values
+* Each piece is moved to correct location on the board
+* Contains any images to use for the widgets
+
+AI
+* Choose random valid move(beginner)
+* Use minimax-tree with alpha-beta pruning
+   * Up to 2 levels(easy)
+   * Up to half the tree(medium)
+   * Up to the whole tree(hard)
+
+Client Server
+* Initialize game config from file or from GUI(user)
+* Start a game
+	* Server sends info to client
+	* Client parse game info given to make GUI
+	* Client sends ready
+	* P1 sends move
+	* Server sends AI move info
+	* Server checks validity of move/timer
+	
+* Meeting Times
+	* Monday 4:00 PM
+	* Wednesday 4:00 PM
+	* Thursday 4:00 PM
+
+* Work Distribution
+	* The Client-Server portion will be dealt with by Sarah, while Chloe
+	works to update the GUI, both members will work on building the AI
+

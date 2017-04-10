@@ -1,0 +1,53 @@
+Sprint 2 - Backlog Update
+SCRUM Leader - Sarah White
+
+GUI
+* Welcome Screen - done
+   * Contains sub menus - done
+* Sub menus to store information about the game parameters - not completed
+   * Number of seeds - done
+   * Select if he/she will play as player 1 or 2 - not completed
+   * Select difficulty of the AI - not completed
+   * Enters his/her own custom name via keyboard - done
+* Play Game  - done
+   * Reset button - done
+   * Game is loaded and starting game state screen displayed - done
+* User if prompted if it their turn or the AIs - not completed
+   * A timer is displayed showing the current time left for the turn - done
+* Get Input from mouse when user clicks on a box - done
+   * Number of pieces in each box displays when hovered over - done
+   * Each piece is moved to correct location on the board - not completed
+* Contains New Game and resets widgets during gameplay - done
+   * Calls the game manager to handle these - done
+* Contains all images to use for the widgets - not completed
+
+* Game Manager - not completed
+	* Handling player turns - moved to client/server
+	* Combining the GUI interface with the game - done
+	* Begin basic message passing to the server when I button is pressed - not completed
+
+Basic AI - not completed
+* Choose random valid move - not completed
+
+Client Server Model
+* Make a server - done
+	* initialize with game type / info - done
+* Make a client - done
+	* connect to server - done
+* Start a game - not completed
+	* parse info given - done
+	* Server sends info to client - done 
+	* Client sends ready - done
+	* how long does wait? - not completed
+	* P1 sends move - not completed
+	* server sends move info - not completed
+	* checks validity of move/timer - not completed
+	
+* Meeting Times
+	* Friday 6:00 PM
+	* Saturday 1:00 PM
+	* Sunday 1:00 PM
+
+* Work Distribution
+	* The work will be divided evenly and we will all work as a team on each piece.
+

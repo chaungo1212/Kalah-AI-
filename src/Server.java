@@ -135,6 +135,7 @@ public class Server {
 		}
 	}
 	
+	/*
 public void AIClient(AI new_AI) {
 	try {
 		Socket client_socket = new Socket("127.0.0.1", 4444);
@@ -166,7 +167,7 @@ public void AIClient(AI new_AI) {
 				
 				while (input != "WINNER" || input != "LOSER") {
 					if(turn%2 == client_turn) {
-						ai_move = this_AI.runWhat(this_AI.getType());
+						ai_move = this_AI.search_move(board);
 						message = ai_move;	//sends move
 						p_stream.println(message);
 					}
@@ -202,6 +203,7 @@ public void AIClient(AI new_AI) {
 		System.exit(1);
 	}
 }
+*/
 
 
 // **************************************************************************
